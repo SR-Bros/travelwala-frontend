@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import {useStore} from "./store";
 import {Button, ClickAwayListener} from "@mui/material";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
-import IconTextField from "../../../components/IconTextField";
+import WalaTextField from "../../../components/WalaTextField";
 
 export default function SimplePopper() {
   const [open, setOpen] = React.useState(false);
@@ -27,7 +27,7 @@ export default function SimplePopper() {
   return (<div>
     <h2>No. of Passengers</h2>
     <div ref={anchorElRef}>
-      <IconTextField
+      <WalaTextField
         aria-describedby={id}
         onFocus={handleFocus}
         label='Passengers'

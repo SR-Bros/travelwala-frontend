@@ -2,7 +2,7 @@ import * as React from 'react'
 import {forwardRef, useState} from 'react'
 import {MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
-import IconTextField from "../../../components/IconTextField";
+import WalaTextField from "../../../components/WalaTextField";
 
 function LocationBox(props, ref) {
   const [airport, setAirport] = useState(props.title === "From" ? 'Noi Bai' : 'Tan Son Nhat');
@@ -20,7 +20,7 @@ function LocationBox(props, ref) {
         noValidate
         autoComplete="off"
       >
-        <IconTextField
+        <WalaTextField
           id={props.title}
           select
           label="Destination"
@@ -33,7 +33,7 @@ function LocationBox(props, ref) {
               {option.city}
             </MenuItem>
           ))}
-        </IconTextField>
+        </WalaTextField>
       </Box>
     </div>
   );

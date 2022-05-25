@@ -1,7 +1,7 @@
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 
-const IconTextField = ({iconStart, iconEnd, InputProps, ...props}) => {
+const WalaTextField = ({iconStart, iconEnd, InputProps, ...props}) => {
   return (
     <TextField
       {...props}
@@ -18,4 +18,4 @@ const IconTextField = ({iconStart, iconEnd, InputProps, ...props}) => {
   );
 };
 
-export default IconTextField
+export default WalaTextField
