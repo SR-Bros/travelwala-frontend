@@ -3,8 +3,9 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import {DateRangePicker} from '@mui/x-date-pickers-pro/DateRangePicker';
-import {Autocomplete, Checkbox, FormControlLabel, IconButton, TextField} from "@mui/material";
+import {Autocomplete, Button, Checkbox, FormControlLabel, IconButton, TextField} from "@mui/material";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import './FlightSearchBox.css'
@@ -138,6 +139,10 @@ function FlightSearchBox() {
                 {...params}
               />)}
           />
+          <Button variant="contained" startIcon={<TravelExploreIcon/>}
+                  sx={{height: 50, marginTop: 5, marginLeft: 27}}>
+            Search flights
+          </Button>
         </div>
       </div>
     </StoreProvider>
