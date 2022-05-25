@@ -23,7 +23,7 @@ function LocationBox(props, ref) {
         <WalaTextField
           id={props.title}
           select
-          label="Destination"
+          label="City"
           value={airport}
           onChange={handleChange}
           iconStart={props.iconStart}
