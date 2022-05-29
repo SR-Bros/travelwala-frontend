@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const btnStyle = {my: 2, color: 'black', display: 'block', mr: 2};
 
-  return (<AppBar position="static" style={{background: '#FFFFFF'}}>
+  return (<AppBar position="fixed" style={{background: '#FFFFFF'}}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
