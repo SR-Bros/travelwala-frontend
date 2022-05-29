@@ -119,12 +119,15 @@ const Navbar = () => {
             <Button sx={btnStyle}>
               Contact
             </Button>
+
             <Button sx={btnStyle}>
               Things To Do
             </Button>
+
             <Button sx={btnStyle}>
               My Booking
             </Button>
+
             <Button sx={{
               my: 2,
               color: 'black',
@@ -132,6 +135,7 @@ const Navbar = () => {
             }}>
               Sign In
             </Button>
+            
             <Button sx={{
               my: 2,
               color: 'gray',
