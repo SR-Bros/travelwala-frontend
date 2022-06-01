@@ -1,14 +1,14 @@
-import * as React from 'react';
-import {Link} from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import Logo from '../assets/travelwala.png';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import * as React from "react";
+import { Link } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Logo from "../assets/travelwala.png";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Navbar = () => {
   const [transportAnchorEl, setTransportAnchorEl] = React.useState(null);
@@ -45,14 +45,14 @@ const Navbar = () => {
     setAccommodationAnchorEl(null);
   };
 
-  const btnStyle = {my: 2, color: 'black', display: 'block', mr: 2};
+  const btnStyle = { my: 2, color: "black", display: "block", mr: 2 };
 
-  return (<AppBar position="fixed" style={{background: '#FFFFFF'}}>
+  return (<AppBar position="fixed" style={{ background: "#FFFFFF" }}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
           <Link href="./">
-            <img src={Logo} alt="Travelwala_logo"/>
+            <img src={Logo} alt="Travelwala_logo" />
           </Link>
         </Grid>
         <Grid item xs={8}>
@@ -60,21 +60,21 @@ const Navbar = () => {
             alignItems: "right",
             justifyContent: "right",
             lexGrow: 1,
-            display: {xs: 'none', md: 'flex'}
+            display: { xs: "none", md: "flex" }
           }}>
 
             {/*Transport menu button*/}
             <div>
               <Button
                 id="transport-button"
-                aria-controls={openTransport ? 'transport-menu' : undefined}
+                aria-controls={openTransport ? "transport-menu" : undefined}
                 aria-haspopup="true"
-                aria-expanded={openTransport ? 'true' : undefined}
+                aria-expanded={openTransport ? "true" : undefined}
                 onClick={handleClickTransport}
-                sx={{my: 2, color: 'black', mr: 2}}
+                sx={{ my: 2, color: "black", mr: 2 }}
               >
                 Transport
-                <KeyboardArrowDownIcon/>
+                <KeyboardArrowDownIcon />
               </Button>
               <Menu
                 id="transport-menu"
@@ -82,7 +82,7 @@ const Navbar = () => {
                 open={openTransport}
                 onClose={handleCloseTransport}
                 MenuListProps={{
-                  'aria-labelledby': 'transport-button',
+                  "aria-labelledby": "transport-button"
                 }}
               >
                 <MenuItem onClick={handleFlightsClick}>Flights</MenuItem>
@@ -94,14 +94,14 @@ const Navbar = () => {
             <div>
               <Button
                 id="accommodation-button"
-                aria-controls={openAccommodation ? 'accommodation-menu' : undefined}
+                aria-controls={openAccommodation ? "accommodation-menu" : undefined}
                 aria-haspopup="true"
-                aria-expanded={openAccommodation ? 'true' : undefined}
+                aria-expanded={openAccommodation ? "true" : undefined}
                 onClick={handleClickAccommodation}
-                sx={{my: 2, color: 'black', mr: 2}}
+                sx={{ my: 2, color: "black", mr: 2 }}
               >
                 Accommodation
-                <KeyboardArrowDownIcon/>
+                <KeyboardArrowDownIcon />
               </Button>
               <Menu
                 id="accommodation-menu"
@@ -109,7 +109,7 @@ const Navbar = () => {
                 open={openAccommodation}
                 onClose={handleCloseAccommodation}
                 MenuListProps={{
-                  'aria-labelledby': 'accommodation-button',
+                  "aria-labelledby": "accommodation-button"
                 }}
               >
                 <MenuItem onClick={handleHotelsClick}>Hotels</MenuItem>
@@ -130,20 +130,23 @@ const Navbar = () => {
 
             <Button sx={{
               my: 2,
-              color: 'black',
-              display: 'block',
+              color: "black",
+              display: "block"
             }}>
               Sign In
             </Button>
-            
-            <Button sx={{
+
+            <Button sx={[{
               my: 2,
-              color: 'gray',
+              color: "white",
               marginLeft: 2,
-              background: 'black',
-              display: 'block',
-              borderRadius: 40,
-            }}>
+              background: "black",
+              display: "block",
+              borderRadius: 40
+            },
+              {
+              "&:hover": { color: "black" }
+            }]}>
               Register
             </Button>
           </Box>
