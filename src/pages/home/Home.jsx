@@ -7,7 +7,7 @@ function Home() {
     <div style={{position: "static", height: "2000px"}}>
       {/*<FlightSearchBox/>*/}
       <img src={backgroundImage} style={{width: '100%'}} alt="background-home"/>
-      <SwitchSearch/>
+      <SwitchSearch id="search_box"/>
     </div>
   )
 }
