@@ -1,5 +1,5 @@
 import './App.css';
-import {Home, SignIn, SignUp} from './pages'
+import {Home, SignIn, SignUp, Booking, ReviewBooking} from './pages'
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -13,6 +13,8 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/signin' element={<SignIn/>}/>
           <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/booking' element={<Booking/>}/>
+          <Route path='/reviewbooking' element={<ReviewBooking/>}/>
         </Routes>
       </Router>
       <Footer />
