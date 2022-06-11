@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const btnStyle = { my: 2, color: "black", display: "block", mr: 2 };
 
-  return (<AppBar position="fixed" style={{ background: "#FFFFFF" }}>
+  return (<AppBar position="sticky" style={{background: "#FFFFFF", top:"0"}}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
@@ -128,7 +128,9 @@ const Navbar = () => {
               My Booking
             </Button>
 
-            <Button sx={{
+            <Button
+              href="/signin"
+              sx={{
               my: 2,
               color: "black",
               display: "block"
@@ -136,7 +138,9 @@ const Navbar = () => {
               Sign In
             </Button>
 
-            <Button sx={[{
+            <Button
+              href="/signup"
+              sx={[{
               my: 2,
               color: "white",
               marginLeft: 2,

@@ -1,4 +1,5 @@
 import Home from "./home/Home";
-import Flight from "./flight/Flight"
+import SignIn from "./sign/SignIn";
+import SignUp from "./sign/SignUp";
 
-export {Home, Flight}
+export {Home, SignIn, SignUp}
