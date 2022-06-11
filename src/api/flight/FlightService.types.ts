@@ -5,8 +5,13 @@ export type FlightCriteria = {
   departureCity: string;
   departureDate: Date;
   arrivalCity: string;
-  returnDate: Date;
+  returnDate: Date | null;
   seatClass: string;
+};
+
+export type SearchFlightResponse = {
+  departureFlights?: FlightResponse[];
+  returnFlights: FlightResponse[];
 };
 
 export type FlightResponse = {
