@@ -28,24 +28,24 @@ export default function ContactDetail() {
                     <div>
                         <TextField
                             id="first-name"
-                            defaultValue="First Name*"
+                            placeholder="First Name*"
                             helperText=""
                         />
                         <TextField
                             id="last-name"
-                            defaultValue="Last Name*"
+                            placeholder="Last Name*"
                             helperText=""
                         />
                     </div>
                     <div>
                         <TextField
                             id="email-address"
-                            defaultValue="Email address*"
+                            placeholder="Email address*"
                             helperText=""
                         />
                         <TextField
                             id="phone-number"
-                            defaultValue="Phone Number*"
+                            placeholder="Phone Number*"
                             helperText=""
                         />
                     </div>

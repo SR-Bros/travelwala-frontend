@@ -33,31 +33,31 @@ const TravelerDetailComponent = (props) => {
                     <div>
                         <TextField
                             id="title"
-                            defaultValue="Title"
+                            placeholder="Title"
                             helperText=""
                         />
                     </div>
                     <div>
                         <TextField
                             id="first-name"
-                            defaultValue="First Name*"
+                            placeholder="First Name*"
                             helperText=""
                         />
                         <TextField
                             id="last-name"
-                            defaultValue="Midle & Last Name*"
+                            placeholder="Midle & Last Name*"
                             helperText=""
                         />
                     </div>
                     <div>
                         <TextField
                             id="date-of-birth"
-                            defaultValue="Date of Birth*"
+                            placeholder="Date of Birth*"
                             helperText=""
                         />
                         <TextField
                             id="email-address"
-                            defaultValue="Email address*"
+                            placeholder="Email address*"
                             helperText=""
                         />
                     </div>
