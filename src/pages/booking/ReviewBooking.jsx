@@ -5,6 +5,7 @@ import React from "react";
 import BookingProcess from "./components/BookingProcess";
 import FlightDisplay from "./components/FlightDisplay";
 import DisplayInfoBlock from './components/DisplayInfoBlock';
+import PriceDetail from './components/PriceDetail';
 
 
 const tommyxiaomi = {
@@ -64,6 +65,15 @@ const Booking = () => {
                     </>
                     )
                 }
+            </Grid>
+            {/* Payment Details */}
+            <Grid item xs={12} sx={{}}>
+                <div>
+                    <h1>Price Details</h1>
+                </div>
+            </Grid>
+            <Grid item xs={7.5}>
+              <PriceDetail />
             </Grid>
             <Grid item xs={5} >
                 <Box sx={{          
