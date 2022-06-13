@@ -5,8 +5,15 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
 
-
 const TravelerDetailComponent = (props) => {
+    var myform = [];
+
+    const removePassenger = (index) => {
+        myform = myform.slice(index);
+        props.setNumberOfPassenger(props.numberOfPassenger-1);
+        console.log(myform);
+    }
+
     const detailForm = (index) => {
         return (       
         <div>
@@ -28,7 +35,19 @@ const TravelerDetailComponent = (props) => {
             >   
                 <Container>
                     <div>
-                        <h3>Passenger {index}</h3>
+                        <Box
+                            sx={{          
+                                py:2,   
+                                px: 0,               
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                lineHeight: 0
+                            }}
+                        >
+                            <h3>Passenger {index}</h3>
+                            <Button onClick={() => props.numberOfPassenger > 1 ? removePassenger(index-1) : 0 }>Remove Passenger</Button>
+                        </Box>
                     </div>
                     <div>
                         <TextField
@@ -67,8 +86,6 @@ const TravelerDetailComponent = (props) => {
         );
     };
 
-    const myform = [];
-
     for (let i = 0 ; i< props.numberOfPassenger; i++) {
         myform.push(detailForm(i+1));
     }
@@ -91,7 +108,7 @@ export default function TravelerDetail() {
     return (
         <>
         <div>
-            <TravelerDetailComponent numberOfPassenger={numberOfPassenger}/>
+            <TravelerDetailComponent numberOfPassenger={numberOfPassenger} setNumberOfPassenger={setNumberOfPassenger}/>
         </div>
         <div>
             <Box sx = {{
@@ -108,14 +125,6 @@ export default function TravelerDetail() {
                     sx={{m:2}}
                 >
                     Add Passenger
-                </Button> 
-                
-                <Button 
-                    variant='outlined'
-                    onClick={() => numberOfPassenger > 1 ? setNumberOfPassenger(numberOfPassenger-1) : 0 }
-                    sx={{m:2}}
-                >
-                    Remove Passenger
                 </Button> 
             </Box>
         </div>
