@@ -51,7 +51,7 @@ const Navbar = () => {
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
-          <Link href="./">
+          <Link href="/">
             <img src={Logo} alt="Travelwala_logo" />
           </Link>
         </Grid>
