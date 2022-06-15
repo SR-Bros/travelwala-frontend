@@ -3,6 +3,7 @@ import { Grid, Paper, TextField, Button, Typography, Link, Box } from "@mui/mate
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import SignInService from "../../../api/signin/SignInService"
 import Axios from "axios";
 
 const theme = createTheme({
@@ -20,22 +21,22 @@ const paperStyle = {
   padding: 20,
   height: 500,
   width: 420,
-  margin: "40px 25px auto",
+  margin: "40px auto",
   alignContent: "center",
   alignItems: "center"
 };
 
 const SignInComponent = ({ handleChange }) => {
-  const [phonenumber, setPhonenumber] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const login = () => {
-    Axios.post("", {
-      phone_number: phonenumber,
-      password: password
-    }).then((response) => {
-      console.log(response.data);
-    });
+    const user = {
+      username: username,
+      password: password,
+    }
+
+    SignInService.login(user);
   };
 
   return (
@@ -48,7 +49,7 @@ const SignInComponent = ({ handleChange }) => {
                  variant="standard"
                  placeholder="Enter username/phone number"
                  onChange={(e) => {
-                   setPhonenumber(e.target.value);
+                   setUsername(e.target.value);
                  }}
                  fullWidth required />
       <TextField id="loginPassword"

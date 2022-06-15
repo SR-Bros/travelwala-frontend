@@ -16,7 +16,7 @@ const paperStyle = {
   padding: 20,
   width: 420,
   height: 500,
-  margin: "40px 25px auto",
+  margin: "40px auto",
   alignContent: "center",
   alignItems: "center"
 };

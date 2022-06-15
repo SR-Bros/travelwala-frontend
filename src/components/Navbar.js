@@ -89,6 +89,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleComboClick}>Flight + Hotel</MenuItem>
               </Menu>
             </div>
+            {/*End of Transport menu button*/}
 
             {/*Accommodation menu button*/}
             <div>
@@ -115,6 +116,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleHotelsClick}>Hotels</MenuItem>
               </Menu>
             </div>
+            {/*End of Accommodation menu button*/}
 
             <Button sx={btnStyle}>
               Contact
@@ -124,7 +126,9 @@ const Navbar = () => {
               Things To Do
             </Button>
 
-            <Button sx={btnStyle}>
+            <Button
+              href="/mybooking"
+              sx={btnStyle}>
               My Booking
             </Button>
 
