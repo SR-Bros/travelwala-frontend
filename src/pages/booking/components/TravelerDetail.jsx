@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ThemeStyle from './css/style'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
 
@@ -133,38 +134,28 @@ export default function TravelerDetail() {
 
     return (
         <>
-        <div>
-            {
-                passengers.map((passenger, index) =>
-                    <>
-                        <TravelerDetailComponent
-                            passenger={passenger}
-                            index={index}
-                            onRemove={(index) => 
-                                setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
-                            }
-                            passengers={passengers}
-                        />
-                    </>
-                )
-            }
-        </div>
-        <div>
-            <Box                 
-                component="form"
-                sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch' },
-                border: 1,
-                flexWrap: 'wrap',
-                display: 'inline-flex',
-                alignContent: 'center',
-                pb: 1,
-                mb:5,
-                justifyContent: 'center',
-                ...ThemeStyle.box,
+        <Grid Container>
+            <Grid item xs={12}>
+                {
+                    passengers.map((passenger, index) =>
+                        <>
+                            <TravelerDetailComponent
+                                passenger={passenger}
+                                index={index}
+                                onRemove={(index) => 
+                                    setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
+                                }
+                                passengers={passengers}
+                            />
+                        </>
+                    )
+                }
+            </Grid>
+            <Grid item xs={12} sx={{
+                ...ThemeStyle.box, 
+                border:0,
+                mb: 5
                 }}
-                noValidate
-                autoComplete="off"
             >
                 <Button 
                     variant='outlined'
@@ -180,12 +171,12 @@ export default function TravelerDetail() {
                             }
                         ]); 
                     }}
-                    sx={{m:2}}
+                    sx={{width:'100%'}}
                 >
                     Add Passenger
                 </Button> 
-            </Box>
-        </div>
+            </Grid>
+        </Grid>
         </>
     );
 }

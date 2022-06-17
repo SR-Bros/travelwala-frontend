@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 const style = {
     border:1,
     ...ThemeStyle.box, 
+    width: '100%',
     px: 2,
     mx: 0
 };
