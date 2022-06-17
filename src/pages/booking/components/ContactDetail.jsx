@@ -5,6 +5,17 @@ import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
 
 export default function ContactDetail() {
+    const passenger = {};
+
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
+    const [phoneNumber, setPhoneNumber] = React.useState("");
+    const [email, setEmail] = React.useState("");
+
+    const handleOnChange = (event, setFunction) => {
+        setFunction(event.target.value);
+    }
+
     return (
             <Box
                 component="form"
@@ -30,11 +41,21 @@ export default function ContactDetail() {
                             id="first-name"
                             placeholder="First Name*"
                             helperText=""
+                            value={firstName}
+                            onChange={(event) => {
+                                handleOnChange(event, setFirstName); 
+                                passenger.firstname = event.target.value;
+                            }}
                         />
                         <TextField
                             id="last-name"
                             placeholder="Last Name*"
                             helperText=""
+                            value={lastName}
+                            onChange={(event) => {
+                                handleOnChange(event, setLastName); 
+                                passenger.lastName = event.target.value;
+                            }}
                         />
                     </div>
                     <div>
@@ -42,11 +63,21 @@ export default function ContactDetail() {
                             id="email-address"
                             placeholder="Email address*"
                             helperText=""
+                            value={email}
+                            onChange={(event) => {
+                                handleOnChange(event, setEmail); 
+                                passenger.email = event.target.value;
+                            }}
                         />
                         <TextField
                             id="phone-number"
                             placeholder="Phone Number*"
                             helperText=""
+                            value={phoneNumber}
+                            onChange={(event) => {
+                                handleOnChange(event, setPhoneNumber); 
+                                passenger.phoneNumber = event.target.value;
+                            }}
                         />
                     </div>
                 </Container>
