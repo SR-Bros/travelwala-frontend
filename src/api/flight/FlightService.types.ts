@@ -25,18 +25,24 @@ export type FlightResponse = {
   departureAirport: string;
   arrivalAirport: string;
   departureTime: string;
-  expectedArrivalTime?: string | null;
+  expectedArrivalTime: string;
   occupiedEconomicSeats: number;
   occupiedBusinessSeats: number;
   plane: PlaneResponse;
-  agency: AgencyResponse;
+  airline: AirlineResponse;
 };
 
-export type AgencyResponse = {
+export type AirlineResponse = {
   id: string;
-  code: string;
   name: string;
+  alias?: string | null;
+  iata: string | null;
+  icao: string | null;
+  callSign: string;
+  country: string;
+  active: boolean;
   childPriceRate: number;
+  imageLink?: string | null;
 };
 
 export type PlaneResponse = {

@@ -5,6 +5,7 @@ import {
 } from "../../api/flight/FlightService.types";
 import FlightService from "../../api/flight/FlightService";
 import { useLocation } from "react-router-dom";
+import TableListFlights from "./components/tablelistflights/TableListFlights";
 
 function ListFlight() {
   const [criteria, setCriteria] = useState<FlightCriteria>();
@@ -85,7 +86,7 @@ function ListFlight() {
       .catch((reason) => console.log(reason));
   };
 
-  return <div></div>;
+  return data && <TableListFlights data={data} />;
 }
 
 export default ListFlight;
