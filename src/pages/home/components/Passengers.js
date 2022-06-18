@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {actions, useStore} from "./store";
+import {actions, useStore} from "../../../store";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import {Divider, IconButton, Paper, Stack, styled} from "@mui/material";

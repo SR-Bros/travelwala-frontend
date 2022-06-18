@@ -2,7 +2,7 @@ import * as React from 'react';
 import Popper from '@mui/material/Popper';
 import Passengers from "./Passengers";
 import Box from "@mui/material/Box";
-import {useStore} from "./store";
+import {useStore} from "../../../store";
 import {Button, ClickAwayListener} from "@mui/material";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import WalaTextField from "../../../components/WalaTextField";

@@ -11,7 +11,7 @@ import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import './FlightSearchBox.css'
 import BoxLocation from "./LocationBox";
 import SimplePopper from "./SimplePopper";
-import {StoreProvider} from "./store"
+import {StoreProvider} from "../../../store"
 import BasicDatePicker from "./BasicDatePicker";
 
 const seatClasses = [
