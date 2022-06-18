@@ -4,8 +4,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SignInService from "../../../api/signin/SignInService"
-import Axios from "axios";
 
+//Constant
 const theme = createTheme({
   palette: {
     orangeFake: {
@@ -15,11 +15,13 @@ const theme = createTheme({
   }
 });
 
-const headerStyle = { margin: 0, fontFamily: "Monospace", fontSize: "24px" };
+const headerStyle = { fontFamily: "Monospace", fontSize: "24px" };
+
+const textFieldStyle = { margin: "5px 0px 0px 0px" };
 
 const paperStyle = {
   padding: 20,
-  height: 500,
+  height: 550,
   width: 420,
   margin: "40px auto",
   alignContent: "center",
@@ -30,33 +32,34 @@ const SignInComponent = ({ handleChange }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = () => {
+  const signin = () => {
     const user = {
       username: username,
       password: password,
     }
 
-    SignInService.login(user);
+    SignInService.signin(user);
   };
 
+  //Component
   return (
     <Paper elevation={10} style={paperStyle}>
       <Grid align="center" style={{ marginTop: 50 }}>
         <h2 style={headerStyle}>Log in to your account</h2>
       </Grid>
-      <TextField id="loginUsername"
+      <TextField id="signinUsername"
                  label="Username"
                  variant="standard"
-                 placeholder="Enter username/phone number"
+                 style={textFieldStyle}
                  onChange={(e) => {
                    setUsername(e.target.value);
                  }}
                  fullWidth required />
-      <TextField id="loginPassword"
+      <TextField id="signinPassword"
                  label="Password"
                  variant="standard"
-                 placeholder="Enter password"
                  type="password"
+                 style={textFieldStyle}
                  onChange={(e) => {
                    setPassword(e.target.value);
                  }}
@@ -77,7 +80,7 @@ const SignInComponent = ({ handleChange }) => {
           <Button type="submit"
                   color="orangeFake"
                   variant="contained"
-                  onClick={login}
+                  onClick={signin}
                   fullWidth>
             Sign in
           </Button>
