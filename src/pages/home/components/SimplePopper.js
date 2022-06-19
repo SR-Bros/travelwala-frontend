@@ -10,6 +10,7 @@ import WalaTextField from "../../../components/WalaTextField";
 export default function SimplePopper() {
   const [open, setOpen] = React.useState(false);
   const [state] = useStore();
+  console.log("Da cap nhat state");
   const {adult, child, infant} = state;
   const [label, setLabel] = React.useState(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
   let anchorElRef = React.useRef(null)
@@ -21,6 +22,8 @@ export default function SimplePopper() {
   const handleClickAway = () => {
     setOpen(false)
   }
+
+  console.log(state);
 
   const id = open ? 'simple-popper' : undefined;
 
@@ -45,7 +48,7 @@ export default function SimplePopper() {
         handleClickAway()
       }
     }}>
-      <Popper id={id} open={open} anchorEl={anchorElRef.current}>
+      <Popper id={id} open={open} anchorEl={anchorElRef.current} sx={{zIndex: 'modal'}}>
         <Box sx={{border: 1, p: 1, bgcolor: 'white', marginTop: 2, width: 380}}>
           <Passengers f={(label) => {
             setLabel(label)
