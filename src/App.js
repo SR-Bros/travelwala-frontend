@@ -1,9 +1,8 @@
-import './App.css';
-import {Home, SignIn, SignUp, Booking, ReviewBooking} from './pages'
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ListFlight from "./pages/listflights/ListFlight";
+import './App.css'
+import {Home, SignIn, SignUp, ListFlight, Booking, ReviewBooking} from './pages'
+import Footer from "./components/Footer"
+import Navbar from "./components/Navbar"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 function App() {
   return (
