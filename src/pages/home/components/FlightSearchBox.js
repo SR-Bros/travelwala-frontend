@@ -1,18 +1,19 @@
-import * as React from 'react'
+import * as React from "react";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import FlightLandIcon from '@mui/icons-material/FlightLand';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import {DateRangePicker} from '@mui/x-date-pickers-pro/DateRangePicker';
-import {Autocomplete, Button, Checkbox, FormControlLabel, IconButton, TextField} from "@mui/material";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import './FlightSearchBox.css'
+import FlightLandIcon from "@mui/icons-material/FlightLand";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
+import { Autocomplete, Button, Checkbox, FormControlLabel, IconButton, TextField } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import "./FlightSearchBox.css";
 import BoxLocation from "./LocationBox";
 import SimplePopper from "./SimplePopper";
-import {StoreProvider} from "./store"
+import { StoreProvider } from "./store";
 import BasicDatePicker from "./BasicDatePicker";
+import useNavigateSearch from "../../../hooks/useNavigateSearch";
 
 const seatClasses = [
   {
@@ -26,6 +27,8 @@ const seatClasses = [
 function FlightSearchBox() {
   const [checked, setChecked] = React.useState(false);
   const [value, setValue] = React.useState([null, null]);
+  const navigate = useNavigateSearch();
+
   const handleChange = (e) => {
     if (e.currentTarget.checked) {
       setChecked(true)
@@ -34,8 +37,9 @@ function FlightSearchBox() {
     }
   }
 
-  const fromRef = React.useRef()
-  const toRef = React.useRef()
+  const fromRef = React.useRef();
+  const toRef = React.useRef();
+
   const handleSwap = () => {
     const fromInput = fromRef.current.querySelector('input');
     const toInput = toRef.current.querySelector('input');
@@ -44,9 +48,24 @@ function FlightSearchBox() {
     let buff = fromInput.value;
     fromInput.value = toInput.value;
     toInput.value = buff;
-    buff = fromDiv.innerHTML
-    fromDiv.innerHTML = toDiv.innerHTML
+    buff = fromDiv.innerHTML;
+    fromDiv.innerHTML = toDiv.innerHTML;
     toDiv.innerHTML = buff;
+  }
+
+  const getSearchParams = () => {
+    const fromInput = fromRef.current.querySelector('input');
+    const toInput = toRef.current.querySelector('input');
+    const departureDate = document.getElementById("departure-date").querySelector('input').value;
+    const returnDate = checked ? document.getElementById("return-date").querySelectorAll('input')[1].value : "NA"
+    const seatClass = document.getElementById("seat-class").querySelector('input').value;
+    const passengerLabelList = document.getElementById("passenger").querySelector('input').value.split(" ");
+    return {
+      ap: `${fromInput.value}.${toInput.value}`,
+      dt: `${departureDate}.${returnDate}`,
+      ps: `${passengerLabelList[0]}.${passengerLabelList[2]}.${passengerLabelList[4]}`,
+      sc: seatClass
+    };
   }
 
   return (<StoreProvider>
@@ -107,7 +126,7 @@ function FlightSearchBox() {
                 <React.Fragment>
                   <div id="departure-date">
                     <h2>Departure Date</h2>
-                    {checked ? <TextField {...startProps}/> : <BasicDatePicker/>}
+                    {checked ? <TextField {...startProps}/> : <BasicDatePicker />}
                   </div>
                   <div id="return-date">
                     <FormControlLabel
@@ -128,19 +147,27 @@ function FlightSearchBox() {
           </LocalizationProvider>
         </div>
         <div id="right-side">
-          <SimplePopper></SimplePopper>
+          <div id="passenger">
+            <SimplePopper></SimplePopper>
+          </div>
           <h2 style={{marginTop: 100}}>Seat Class</h2>
-          <Autocomplete
-            options={seatClasses}
-            defaultValue={seatClasses[0]}
-            popupIcon={<ExpandMoreIcon sx={{color: "#2196f3", fontSize: 25}}/>}
-            renderInput={(params) =>
-              (<TextField
-                {...params}
-              />)}
-          />
-          <Button variant="contained" startIcon={<TravelExploreIcon/>}
-                  sx={{height: 50, marginTop: 5, marginLeft: 27}}>
+          <div id="seat-class">
+            <Autocomplete
+              options={seatClasses}
+              defaultValue={seatClasses[0]}
+              popupIcon={<ExpandMoreIcon sx={{color: "#2196f3", fontSize: 25}}/>}
+              renderInput={(params) =>
+                (<TextField
+                  {...params}
+                />)}
+            />
+          </div>
+          <Button
+            variant="contained"
+            startIcon={<TravelExploreIcon/>}
+            sx={{height: 50, marginTop: 5, marginLeft: 27}}
+            onClick={() => {navigate("/flight/search", getSearchParams());}}
+          >
             Search flights
           </Button>
         </div>
