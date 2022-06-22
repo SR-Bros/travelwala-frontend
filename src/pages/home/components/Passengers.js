@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
-import {actions, useStore} from "../../../store";
+import {actions} from "../../../store";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import {Divider, IconButton, Paper, Stack, styled} from "@mui/material";
+import {useDispatch, useSelector}  from "react-redux";
+import { passengerSelector } from "../../../redux/selectors";
 
 const Item = styled(Paper)(({theme}) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff', ...theme.typography.body2,
@@ -44,8 +46,10 @@ const StackDisplay = ({...props}) => {
 }
 
 function Passengers({f}) {
-  const [state, dispatch] = useStore();
-  const {adult, child, infant} = state;
+  // const [state, dispatch] = useStore();
+  // const {adult, child, infant} = state;
+  const dispatch = useDispatch();
+  const {adult, child, infant} = useSelector(passengerSelector);
   useEffect(() => {
     f(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
   }, [adult, child, infant, f])

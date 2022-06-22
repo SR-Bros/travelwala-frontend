@@ -2,16 +2,15 @@ import * as React from 'react';
 import Popper from '@mui/material/Popper';
 import Passengers from "./Passengers";
 import Box from "@mui/material/Box";
-import {useStore} from "../../../store";
 import {Button, ClickAwayListener} from "@mui/material";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import WalaTextField from "../../../components/WalaTextField";
+import { useSelector } from "react-redux";
+import { passengerSelector } from "../../../redux/selectors";
 
 export default function SimplePopper() {
   const [open, setOpen] = React.useState(false);
-  const [state] = useStore();
-  console.log("Da cap nhat state");
-  const {adult, child, infant} = state;
+  const {adult, child, infant} = useSelector(passengerSelector);
   const [label, setLabel] = React.useState(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
   let anchorElRef = React.useRef(null)
 
@@ -22,8 +21,6 @@ export default function SimplePopper() {
   const handleClickAway = () => {
     setOpen(false)
   }
-
-  console.log(state);
 
   const id = open ? 'simple-popper' : undefined;
 

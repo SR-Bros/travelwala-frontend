@@ -11,9 +11,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import "./FlightSearchBox.css";
 import BoxLocation from "./LocationBox";
 import SimplePopper from "./SimplePopper";
-import {StoreProvider} from "../../../store"
 import BasicDatePicker from "./BasicDatePicker";
 import useNavigateSearch from "../../../hooks/useNavigateSearch";
+import store from '../../../redux/store'
+import {Provider} from 'react-redux'
 
 const seatClasses = [
   {
@@ -68,7 +69,8 @@ function FlightSearchBox() {
     };
   }
 
-  return (<StoreProvider>
+  return (
+    <Provider store={store}>
       <div id="box">
         <div id="left-side">
           <div className="from">
@@ -172,8 +174,7 @@ function FlightSearchBox() {
           </Button>
         </div>
       </div>
-    </StoreProvider>
-
+    </Provider>
   );
 }
 

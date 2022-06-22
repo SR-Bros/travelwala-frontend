@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import WalaTextField from "../../../components/WalaTextField";
 
 function LocationBox(props, ref) {
-  const [airport, setAirport] = useState(props.title === "From" ? 'Noi Bai' : 'Tan Son Nhat');
+  const [airport, setAirport] = useState(props.title === "From" ? 'Hanoi' : 'Ho Chi Minh City');
   const handleChange = (event) => {
     setAirport(event.target.value);
   };
@@ -30,7 +30,7 @@ function LocationBox(props, ref) {
         >
           {airports.map((option) => (
             <MenuItem key={option.value} value={option.value}>
-              {option.city}
+              {option.label}
             </MenuItem>
           ))}
         </WalaTextField>
@@ -40,11 +40,11 @@ function LocationBox(props, ref) {
 }
 
 const airports = [
-  {label: 'Noi Bai', city: 'Hanoi', value: 'Noi Bai'},
-  {label: 'Tan Son Nhat', city: 'Ho Chi Minh City', value: 'Tan Son Nhat'},
-  {label: 'Cam Ranh', city: 'Nha Trang', value: 'Cam Ranh'},
-  {label: 'Da Nang', city: 'Da Nang', value: 'Da Nang'},
-  {label: 'Phu Bai', city: 'Hue', value: 'Phu Bai'}
+  {label: 'Hanoi', value: 'Hanoi'},
+  {label: 'Ho Chi Minh City', value: 'Ho Chi Minh City'},
+  {label: 'Nha Trang',value: 'Nha Trang'},
+  {label: 'Da Nang', value: 'Da Nang'},
+  {label: 'Hue', value: 'Hue'}
 ]
 
 export default forwardRef(LocationBox)
