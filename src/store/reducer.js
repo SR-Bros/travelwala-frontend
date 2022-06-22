@@ -1,4 +1,4 @@
-import {ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT} from './constants'
+import {ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT} from '../redux/constants'
 
 const passengerState = {
     adult: 1,
@@ -9,43 +9,37 @@ const passengerState = {
 function reducer(state, action) {
     switch (action.type) {
         case ADD_ADULT:
-            state.adult++;
             return {
-                ...state
+                ...state,
+                adult: state.adult + 1
             }
         case ADD_CHILD:
-            state.child++;
             return {
-                ...state
+                ...state,
+                child: state.child + 1
             }
         case ADD_INFANT:
-            state.infant++;
             return {
-                ...state
+                ...state,
+                infant: state.infant + 1
             }
         case REMOVE_ADULT:
-            if (state.adult >= 2) {
-                state.adult--;
-            }
             return {
-                ...state
+                ...state,
+                adult: state.adult >= 2 ? state.adult - 1 : state.adult
             }
         case REMOVE_CHILD:
-            if (state.child >= 1) {
-                state.child--;
-            }
             return {
-                ...state
+                ...state,
+                child: state.child >= 1 ? state.child - 1 : state.child
             }
         case REMOVE_INFANT:
-            if (state.infant >= 1) {
-                state.infant--;
-            }
             return {
-                ...state
+                ...state,
+                infant: state.infant >=1 ? state.infant - 1 : state.infant
             }
         default:
-            break
+            return state
     }
 }
 

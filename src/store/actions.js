@@ -1,4 +1,4 @@
-import {ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT} from "./constants";
+import {ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT} from "../redux/constants";
 
 export const addAdult = payload => ({
     type: ADD_ADULT,

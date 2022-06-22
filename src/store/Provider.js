@@ -4,6 +4,7 @@ import reducer, {passengerState} from "./reducer";
 
 function Provider({children}) {
     const [state, dispatch] = useReducer(reducer, passengerState);
+    console.log("Provider", state);
     return (
         <Context.Provider value={[state, dispatch]}>
             {children}
