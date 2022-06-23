@@ -3,9 +3,9 @@ export type FlightCriteria = {
   childCount: number;
   infantCount: number;
   departureCity: string;
-  departureDate: Date;
+  departureDate: string;
   arrivalCity: string;
-  returnDate: Date | null;
+  returnDate: string | null;
   seatClass: string;
 };
 
