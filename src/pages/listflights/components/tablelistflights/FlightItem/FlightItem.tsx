@@ -67,7 +67,7 @@ function FlightItem(props: FlightItemProps) {
 
   const CellPrice = useMemo(() => {
     return (
-      <TableCell align="right" style={{ width: "115px" }}>
+      <TableCell align="right" style={{ width: "150px" }}>
         {flight.adultEconomicPrice.toLocaleString()} VND
       </TableCell>
     );
@@ -76,7 +76,18 @@ function FlightItem(props: FlightItemProps) {
   const CellBtnChoose = useMemo(() => {
     return (
       <TableCell align="right" style={{ width: "115px" }}>
-        <Button type="submit" variant="contained">
+        <Button
+          sx={{
+            background: "#FC6C1B",
+            fontWeight: 700,
+            width: "170px",
+            height: "42px",
+            ":hover": {
+              backgroundColor: "#FC8643",
+            },
+          }}
+          variant="contained"
+        >
           Choose
         </Button>
       </TableCell>
