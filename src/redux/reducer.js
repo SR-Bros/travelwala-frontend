@@ -1,4 +1,4 @@
-import { ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT } from "./constants";
+import { ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT, SET_RETURN_DATE, SET_DEPARTURE_DATE, SET_TO_AIRPORT, SET_FROM_AIRPORT, SET_SEAT_CLASS, SET_ROUND_TRIP} from "./constants";
 
 const initState = {
   passenger: {
@@ -7,13 +7,15 @@ const initState = {
     infant: 0
   },
   airport: {
-    from: "",
-    to: ""
+    from: "Hanoi",
+    to: "Ho Chi Minh City"
   },
   date: {
-    departure: "",
-    return: null
-  }
+    departureDate: new Date(),
+    returnDate: null
+  },
+  seatClass: "Economy",
+  roundTrip: false
 }
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
@@ -64,6 +66,48 @@ const rootReducer = (state = initState, action) => {
           ...state.passenger,
           infant: state.passenger.infant >= 1 ? state.passenger.infant - 1 : state.passenger.infant
         }
+      }
+    case SET_FROM_AIRPORT:
+      return {
+        ...state,
+        airport: {
+          ...state.airport,
+          from: action.payload
+        }
+      }
+    case SET_TO_AIRPORT:
+      return {
+        ...state,
+        airport: {
+          ...state.airport,
+          to: action.payload
+        }
+      }
+    case SET_DEPARTURE_DATE:
+      return {
+        ...state,
+        date: {
+          ...state.date,
+          departureDate: action.payload
+        }
+      }
+    case SET_RETURN_DATE:
+      return {
+        ...state,
+        date: {
+          ...state.date,
+          returnDate: action.payload
+        }
+      }
+    case SET_SEAT_CLASS:
+      return {
+        ...state,
+        seatClass: action.payload
+      }
+    case SET_ROUND_TRIP:
+      return {
+        ...state,
+        roundTrip: action.payload
       }
     default:
       return state

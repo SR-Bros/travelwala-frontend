@@ -1,4 +1,17 @@
-import { ADD_ADULT, ADD_CHILD, ADD_INFANT, REMOVE_ADULT, REMOVE_CHILD, REMOVE_INFANT, SET_DEPARTURE_DATE, SET_RETURN_DATE, SET_TO_AIRPORT, SET_FROM_AIRPORT } from "./constants";
+import {
+  ADD_ADULT,
+  ADD_CHILD,
+  ADD_INFANT,
+  REMOVE_ADULT,
+  REMOVE_CHILD,
+  REMOVE_INFANT,
+  SET_DEPARTURE_DATE,
+  SET_RETURN_DATE,
+  SET_TO_AIRPORT,
+  SET_FROM_AIRPORT,
+  SET_SEAT_CLASS,
+  SET_ROUND_TRIP
+} from "./constants";
 
 export const addAdult = payload => ({
   type: ADD_ADULT,
@@ -47,5 +60,15 @@ export const setFromAirport = payload => ({
 
 export const setToAirport = payload => ({
   type: SET_TO_AIRPORT,
+  payload
+})
+
+export const setSeatClass = payload => ({
+    type: SET_SEAT_CLASS,
+    payload
+})
+
+export const setRoundTrip = payload => ({
+  type: SET_ROUND_TRIP,
   payload
 })

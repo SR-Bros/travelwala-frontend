@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {actions} from "../../../store";
+import React from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import {Divider, IconButton, Paper, Stack, styled} from "@mui/material";
 import {useDispatch, useSelector}  from "react-redux";
 import { passengerSelector } from "../../../redux/selectors";
+import { addAdult, addChild, addInfant, removeAdult, removeChild, removeInfant } from "../../../redux/actions";
 
 const Item = styled(Paper)(({theme}) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff', ...theme.typography.body2,
@@ -45,24 +45,19 @@ const StackDisplay = ({...props}) => {
   )
 }
 
-function Passengers({f}) {
-  // const [state, dispatch] = useStore();
-  // const {adult, child, infant} = state;
+function Passengers() {
   const dispatch = useDispatch();
   const {adult, child, infant} = useSelector(passengerSelector);
-  useEffect(() => {
-    f(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
-  }, [adult, child, infant, f])
   const handleIncrease = (type) => {
     switch (type) {
       case "Adult":
-        dispatch(actions.addAdult())
+        dispatch(addAdult())
         break
       case "Child":
-        dispatch(actions.addChild())
+        dispatch(addChild())
         break
       case "Infant":
-        dispatch(actions.addInfant())
+        dispatch(addInfant())
         break
       default:
         break
@@ -72,13 +67,13 @@ function Passengers({f}) {
   const handleDecrease = (type) => {
     switch (type) {
       case "Adult":
-        dispatch(actions.removeAdult())
+        dispatch(removeAdult())
         break
       case "Child":
-        dispatch(actions.removeChild())
+        dispatch(removeChild())
         break
       case "Infant":
-        dispatch(actions.removeInfant())
+        dispatch(removeInfant())
         break
       default:
         break

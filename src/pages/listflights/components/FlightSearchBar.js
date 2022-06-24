@@ -11,23 +11,37 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
-import { useSelector } from "react-redux";
-import { passengerSelector } from "../../../redux/selectors";
+import FlightClassIcon from '@mui/icons-material/FlightClass';
+import { Provider, useSelector } from "react-redux";
+import { airportSelector, dateSelector, passengerSelector, seatClassSelector } from "../../../redux/selectors";
+import store from "../../../redux/store";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props}></Slide>;
 });
+
 const FlightSearchBar = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const {adult, child, infant} = useSelector(passengerSelector);
-  const valuePassenger = adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant");
   const handleClose = () => {
     setOpen(false);
   };
 
+  const {adult, child, infant} = useSelector(passengerSelector);
+  const {from, to} = useSelector(airportSelector);
+  const {departureDate, returnDate} = useSelector(dateSelector);
+  const seatClass = useSelector(seatClassSelector);
+  const passengerValue = adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant");
+  const departureDateTime = departureDate.getDate() + "/"
+                            + (departureDate.getMonth()+1)  + "/"
+                            + departureDate.getFullYear();
+  const returnDateTime = returnDate ? returnDate.getDate() + "/"
+                                      + (returnDate.getMonth()+1)  + "/"
+                                      + returnDate.getFullYear()
+                                      : "";
+  const dateValue = departureDateTime.concat(returnDate ? "  ->  " : " One way", returnDateTime);
   return (
     <div>
       <Stack
@@ -35,10 +49,11 @@ const FlightSearchBar = () => {
         divider={<Divider orientation="vertical" flexItem />}
         justifyContent="center"
       >
-        <WalaTextField sx={{width: 200}} disabled iconStart={<FlightTakeoffIcon sx={{color: "#2196f3", fontSize: 25}}/>} value="Hanoi"/>
-        <WalaTextField sx={{width: 200}} disabled iconStart={<FlightLandIcon sx={{color: "#2196f3", fontSize: 25}}/>} value="Da Nang"/>
-        <WalaTextField sx={{width: 500}} disabled iconStart={<DateRangeIcon sx={{color: "#2196f3", fontSize: 25}}/>} value=""/>
-        <WalaTextField sx={{width: 250}} disabled iconStart={<AirlineSeatReclineNormalIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={valuePassenger}/>
+        <WalaTextField sx={{width: 200}} disabled iconStart={<FlightTakeoffIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={from}/>
+        <WalaTextField sx={{width: 200}} disabled iconStart={<FlightLandIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={to}/>
+        <WalaTextField sx={{width: 300}} disabled iconStart={<DateRangeIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={dateValue}/>
+        <WalaTextField sx={{width: 250}} disabled iconStart={<AirlineSeatReclineNormalIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={passengerValue}/>
+        <WalaTextField sx={{width: 200}} disabled iconStart={<FlightClassIcon sx={{color: "#2196f3", fontSize: 25}}/>} value={seatClass}/>
         <Button variant="outlined" onClick={handleClickOpen}>
           Slide in alert dialog
         </Button>
@@ -53,7 +68,9 @@ const FlightSearchBar = () => {
       >
         <DialogContent>
           <div id="bar">
-            <FlightSearchBox/>
+            <Provider store={store}>
+              <FlightSearchBox/>
+            </Provider>
           </div>
         </DialogContent>
       </Dialog>

@@ -11,7 +11,7 @@ import { passengerSelector } from "../../../redux/selectors";
 export default function SimplePopper() {
   const [open, setOpen] = React.useState(false);
   const {adult, child, infant} = useSelector(passengerSelector);
-  const [label, setLabel] = React.useState(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
+  const label = adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant");
   let anchorElRef = React.useRef(null)
 
   const handleFocus = () => {
@@ -47,10 +47,7 @@ export default function SimplePopper() {
     }}>
       <Popper id={id} open={open} anchorEl={anchorElRef.current} sx={{zIndex: 'modal'}}>
         <Box sx={{border: 1, p: 1, bgcolor: 'white', marginTop: 2, width: 380}}>
-          <Passengers f={(label) => {
-            setLabel(label)
-          }}
-          />
+          <Passengers />
           <Button color='success' sx={{marginLeft: 39}} onClick={handleClickAway}>Done</Button>
         </Box>
       </Popper>
