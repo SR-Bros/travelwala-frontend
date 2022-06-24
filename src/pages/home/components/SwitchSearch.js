@@ -5,6 +5,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import FlightSearchBox from './FlightSearchBox';
+import { Provider } from "react-redux";
+import store from "../../../redux/store";
 
 const SignInOutContainer = () => {
   const [value, setValue] = useState(0)
@@ -49,7 +51,9 @@ const SignInOutContainer = () => {
         <Tab label="Combo"/>
       </Tabs>
       <TabPanel value={value} index={0}>
-        <FlightSearchBox handleChange={handleChange}/>
+        <Provider store={store}>
+          <FlightSearchBox handleChange={handleChange}/>
+        </Provider>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Typography>Under Maintenance</Typography>
