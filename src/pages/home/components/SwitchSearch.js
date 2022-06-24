@@ -1,23 +1,21 @@
-import React, {useState} from 'react'
-import Paper from '@mui/material/Paper';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import FlightSearchBox from './FlightSearchBox';
-import { Provider } from "react-redux";
-import store from "../../../redux/store";
+import React, { useState } from "react";
+import Paper from "@mui/material/Paper";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import FlightSearchBox from "./FlightSearchBox";
 
 const SignInOutContainer = () => {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const paperStyle = {}
+  const paperStyle = {};
 
   function TabPanel(props) {
-    const {children, value, index, ...other} = props;
+    const { children, value, index, ...other } = props;
 
     return (
       <div
@@ -46,14 +44,12 @@ const SignInOutContainer = () => {
         aria-label="disabled tabs example"
         centered
       >
-        <Tab label="Flights"/>
-        <Tab label="Hotels"/>
-        <Tab label="Combo"/>
+        <Tab label="Flights" />
+        <Tab label="Hotels" />
+        <Tab label="Combo" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Provider store={store}>
-          <FlightSearchBox handleChange={handleChange}/>
-        </Provider>
+        <FlightSearchBox handleChange={handleChange} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Typography>Under Maintenance</Typography>
@@ -62,8 +58,7 @@ const SignInOutContainer = () => {
         <Typography>Under Maintenance</Typography>
       </TabPanel>
     </Paper>
-
-  )
-}
+  );
+};
 
 export default SignInOutContainer;
