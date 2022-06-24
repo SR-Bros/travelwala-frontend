@@ -1,13 +1,21 @@
 import * as React from 'react'
-import {forwardRef, useState} from 'react'
+import {forwardRef} from 'react'
 import {MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
 import WalaTextField from "../../../components/WalaTextField";
+import { useDispatch, useSelector } from "react-redux";
+import { airportSelector } from "../../../redux/selectors";
+import { setFromAirport, setToAirport } from "../../../redux/actions";
 
 function LocationBox(props, ref) {
-  const [airport, setAirport] = useState(props.title === "From" ? 'Hanoi' : 'Ho Chi Minh City');
+  const {from, to} = useSelector(airportSelector);
+  const dispatch = useDispatch();
   const handleChange = (event) => {
-    setAirport(event.target.value);
+    if(props.title === "From"){
+      dispatch(setFromAirport(event.target.value));
+    }else {
+      dispatch(setToAirport(event.target.value));
+    }
   };
   return (<div>
       <h2 style={{marginBottom: 10}}>{props.title}</h2>
@@ -24,12 +32,12 @@ function LocationBox(props, ref) {
           id={props.title}
           select
           label="City"
-          value={airport}
+          value={props.title === "From" ? from : to }
           onChange={handleChange}
           iconStart={props.iconStart}
         >
           {airports.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem key={option.label} value={option.label}>
               {option.label}
             </MenuItem>
           ))}
@@ -40,11 +48,11 @@ function LocationBox(props, ref) {
 }
 
 const airports = [
-    {label: 'Hanoi', value: 'Hanoi'},
-    {label: 'Ho Chi Minh City', value: 'Ho Chi Minh City'},
-    {label: 'Nha Trang',value: 'Nha Trang'},
-    {label: 'Da Nang', value: 'Da Nang'},
-    {label: 'Hue', value: 'Hue'}
+  {label: 'Hanoi'},
+  {label: 'Ho Chi Minh City'},
+  {label: 'Nha Trang'},
+  {label: 'Da Nang'},
+  {label: 'Hue'}
 ]
 
 export default forwardRef(LocationBox)

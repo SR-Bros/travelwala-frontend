@@ -1,6 +1,0 @@
-export const ADD_ADULT = 'add_adult'
-export const ADD_CHILD = 'add_child'
-export const ADD_INFANT = 'add_infant'
-export const REMOVE_ADULT = 'remove_adult'
-export const REMOVE_CHILD = 'remove_child'
-export const REMOVE_INFANT = 'remove_infant'
