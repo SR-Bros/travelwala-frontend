@@ -7,6 +7,8 @@ import FlightService from "../../api/flight/FlightService";
 import { useLocation } from "react-router-dom";
 import TableListFlights from "./components/tablelistflights/TableListFlights";
 import { formatDate } from "../../utils/DateTimeUtils";
+import { Grid } from "@mui/material";
+import FlightCart from "./components/flight-cart/FlightCart";
 
 function ListFlight() {
   const [criteria, setCriteria] = useState<FlightCriteria>();
@@ -87,7 +89,16 @@ function ListFlight() {
       .catch((reason) => console.log(reason));
   };
 
-  return data && <TableListFlights data={data} />;
+  return (
+    <Grid container spacing={3} sx={{ padding: "0px 0px 16px 24px" }}>
+      <Grid item sm={12} md={3}>
+        <FlightCart />
+      </Grid>
+      <Grid item sm={12} md={9}>
+        <TableListFlights data={data} />
+      </Grid>
+    </Grid>
+  );
 }
 
 export default ListFlight;

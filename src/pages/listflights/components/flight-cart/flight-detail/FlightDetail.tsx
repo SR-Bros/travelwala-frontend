@@ -10,11 +10,10 @@ type FlightDetailProps = {
   title: string;
   airlineImage?: string | null;
   airlineName: string;
-  departureTime: Date;
-  arrivalTime: Date;
+  departureTime: string;
+  arrivalTime: string;
   departureAirport: string;
   arrivalAirport: string;
-  sx?: object;
 };
 
 function FlightDetail(props: FlightDetailProps) {
@@ -26,7 +25,6 @@ function FlightDetail(props: FlightDetailProps) {
     arrivalTime,
     departureAirport,
     arrivalAirport,
-    sx,
   } = props;
 
   return (
@@ -34,7 +32,6 @@ function FlightDetail(props: FlightDetailProps) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        ...sx,
       }}
     >
       {title}
@@ -61,7 +58,9 @@ function FlightDetail(props: FlightDetailProps) {
           <Typography>{airlineName}</Typography>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography>{hourMinuteDiff(departureTime, arrivalTime)}</Typography>
+          <Typography>
+            {hourMinuteDiff(new Date(departureTime), new Date(arrivalTime))}
+          </Typography>
           <Typography>
             {convertDateToAmPm(new Date(departureTime))}
             &nbsp; - &nbsp;

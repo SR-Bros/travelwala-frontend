@@ -11,7 +11,7 @@ export type FlightCriteria = {
 
 export type SearchFlightResponse = {
   departureFlights?: FlightResponse[];
-  returnFlights: FlightResponse[];
+  returnFlights?: FlightResponse[];
 };
 
 export type FlightResponse = {

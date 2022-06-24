@@ -1,15 +1,26 @@
 import React from "react";
-import { SearchFlightResponse } from "../../../../api/flight/FlightService.types";
+import {
+  FlightResponse,
+  SearchFlightResponse,
+} from "../../../../api/flight/FlightService.types";
 import { Table, TableBody, TableContainer } from "@mui/material";
 import FlightItem from "./FlightItem/FlightItem";
 import { BoxTableListFlight } from "./TableListFlight.styles";
+import { useDispatch } from "react-redux";
+import { chooseDepartureFlightForBooking } from "../../../../redux/booking/BookingSlice";
 
 type TableListFlightsProps = {
-  data: SearchFlightResponse;
+  data?: SearchFlightResponse;
 };
 
 function TableListFlights(props: TableListFlightsProps) {
   const { data } = props;
+
+  const dispatch = useDispatch();
+
+  const handleChooseFlight = (flight: FlightResponse): void => {
+    dispatch(chooseDepartureFlightForBooking(flight));
+  };
 
   return (
     <BoxTableListFlight
@@ -41,8 +52,8 @@ function TableListFlights(props: TableListFlightsProps) {
       >
         <Table aria-label="simple table" style={{ borderCollapse: "inherit" }}>
           <TableBody>
-            {data.departureFlights?.map((flight) => (
-              <FlightItem flight={flight} />
+            {data?.departureFlights?.map((flight) => (
+              <FlightItem flight={flight} onChoose={handleChooseFlight} />
             ))}
           </TableBody>
         </Table>

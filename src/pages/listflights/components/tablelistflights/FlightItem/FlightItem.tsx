@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import { FlightResponse } from "../../../../../api/flight/FlightService.types";
 import { Box, Button, TableCell, TableRow, Typography } from "@mui/material";
 import {
@@ -9,10 +9,11 @@ import DefaultImage from "../../../../../components/SVG/DefaultImage";
 
 type FlightItemProps = {
   flight: FlightResponse;
+  onChoose: (f: FlightResponse) => void;
 };
 
 function FlightItem(props: FlightItemProps) {
-  const { flight } = props;
+  const { flight, onChoose } = props;
 
   const CellImage = useMemo(() => {
     return (
@@ -86,6 +87,7 @@ function FlightItem(props: FlightItemProps) {
               backgroundColor: "#FC8643",
             },
           }}
+          onClick={() => onChoose(flight)}
           variant="contained"
         >
           Choose
