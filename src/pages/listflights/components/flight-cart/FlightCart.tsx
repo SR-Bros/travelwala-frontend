@@ -9,6 +9,10 @@ function FlightCart() {
   const roundTrip: boolean = useSelector(
     (state: RootState) => (state.criteria as any).roundTrip
   );
+  const airport = useSelector(
+    (state: RootState) => (state.criteria as any).airport
+  );
+  const date = useSelector((state: RootState) => (state.criteria as any).date);
   const departureFlight: FlightResponse = useSelector(
     (state: RootState) => state.booking.departureFlight
   );
@@ -19,7 +23,6 @@ function FlightCart() {
   return (
     <Box
       sx={{
-        height: "308px",
         padding: "16px",
         display: "flex",
         flexDirection: "column",
@@ -31,24 +34,22 @@ function FlightCart() {
     >
       <FlightDetail
         title="Departure"
-        airlineImage={departureFlight.airline?.imageLink}
-        airlineName={departureFlight.airline?.name}
-        departureTime={departureFlight.departureTime}
-        arrivalTime={departureFlight.expectedArrivalTime}
-        departureAirport={departureFlight.departureAirport}
-        arrivalAirport={departureFlight.arrivalAirport}
+        departureDate={date.departureDate}
+        departureCity={airport.from}
+        arrivalCity={airport.to}
+        flight={departureFlight}
+        index={1}
       />
       {roundTrip && returnFlight && (
         <Fragment>
           <Divider />
           <FlightDetail
             title="Return"
-            airlineImage={returnFlight.airline?.imageLink}
-            airlineName={returnFlight.airline?.name}
-            departureTime={returnFlight.departureTime}
-            arrivalTime={returnFlight.expectedArrivalTime}
-            departureAirport={returnFlight.departureAirport}
-            arrivalAirport={returnFlight.arrivalAirport}
+            departureDate={date.returnDate}
+            departureCity={airport.to}
+            arrivalCity={airport.from}
+            flight={returnFlight}
+            index={2}
           />
         </Fragment>
       )}
