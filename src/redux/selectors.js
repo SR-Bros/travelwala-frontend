@@ -1,5 +1,5 @@
-export const passengerSelector = (state) => state.passenger
-export const airportSelector = (state) => state.airport
-export const dateSelector = (state) => state.date
-export const seatClassSelector = (state) => state.seatClass
-export const roundTripSelector = (state) => state.roundTrip
+export const passengerSelector = (state) => state.criteria.passenger;
+export const airportSelector = (state) => state.criteria.airport;
+export const dateSelector = (state) => state.criteria.date;
+export const seatClassSelector = (state) => state.criteria.seatClass;
+export const roundTripSelector = (state) => state.criteria.roundTrip;

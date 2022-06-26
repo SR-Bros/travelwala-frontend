@@ -5,6 +5,10 @@ import {
 } from "../../api/flight/FlightService.types";
 import FlightService from "../../api/flight/FlightService";
 import { useLocation } from "react-router-dom";
+import TableListFlights from "./components/tablelistflights/TableListFlights";
+import { formatDate } from "../../utils/DateTimeUtils";
+import { Grid } from "@mui/material";
+import FlightCart from "./components/flight-cart/FlightCart";
 
 function ListFlight() {
   const [criteria, setCriteria] = useState<FlightCriteria>();
@@ -58,11 +62,11 @@ function ListFlight() {
       arrivalCity: airports && airports[1] ? airports[1] : "",
       departureDate:
         departureDate && departureDate[0]
-          ? new Date(departureDate[0])
-          : new Date(),
+          ? formatDate(new Date(departureDate[0]))
+          : formatDate(new Date()),
       returnDate:
         departureDate && departureDate[1] && departureDate[1] !== "NA"
-          ? new Date(departureDate[1])
+          ? formatDate(new Date(departureDate[1]))
           : null,
       adultCount: seatCount && seatCount[0] ? parseInt(seatCount[0]) : 0,
       childCount: seatCount && seatCount[1] ? parseInt(seatCount[1]) : 0,
@@ -85,7 +89,16 @@ function ListFlight() {
       .catch((reason) => console.log(reason));
   };
 
-  return <div></div>;
+  return (
+    <Grid container spacing={3} sx={{ padding: "0px 0px 16px 24px" }}>
+      <Grid item sm={12} md={3}>
+        <FlightCart />
+      </Grid>
+      <Grid item sm={12} md={9}>
+        <TableListFlights data={data} />
+      </Grid>
+    </Grid>
+  );
 }
 
 export default ListFlight;
