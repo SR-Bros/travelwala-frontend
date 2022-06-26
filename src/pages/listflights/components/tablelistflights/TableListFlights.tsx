@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlightResponse,
   SearchFlightResponse,
 } from "../../../../api/flight/FlightService.types";
-import { Table, TableBody, TableContainer } from "@mui/material";
+import { Tab, Table, TableBody, TableContainer, Tabs } from "@mui/material";
 import FlightItem from "./FlightItem/FlightItem";
 import { BoxTableListFlight } from "./TableListFlight.styles";
-import { useDispatch } from "react-redux";
-import { chooseDepartureFlightForBooking } from "../../../../redux/booking/BookingSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  chooseDepartureFlightForBooking,
+  chooseReturnFlightForBooking,
+} from "../../../../redux/booking/BookingSlice";
+import { RootState } from "../../../../redux/store";
 
 type TableListFlightsProps = {
   data?: SearchFlightResponse;
@@ -17,9 +21,23 @@ function TableListFlights(props: TableListFlightsProps) {
   const { data } = props;
 
   const dispatch = useDispatch();
+  const returnDate = useSelector(
+    (state: RootState) => (state.criteria as any).date.returnDate
+  );
+  const willReturn: boolean = returnDate !== null;
 
-  const handleChooseFlight = (flight: FlightResponse): void => {
+  const [tabValue, setTabValue] = useState(0);
+
+  const handelTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
+  const handleChooseDepartureFlight = (flight: FlightResponse): void => {
     dispatch(chooseDepartureFlightForBooking(flight));
+  };
+
+  const handleChooseReturnFlight = (flight: FlightResponse): void => {
+    dispatch(chooseReturnFlightForBooking(flight));
   };
 
   return (
@@ -28,6 +46,10 @@ function TableListFlights(props: TableListFlightsProps) {
         boxShadow: 3,
       }}
     >
+      <Tabs value={tabValue} onChange={handelTabChange}>
+        <Tab label="Departure Flight" />
+        {willReturn && <Tab label="Return Flight" />}
+      </Tabs>
       <TableContainer
         sx={{
           margin: "0px 16px 8px",
@@ -52,9 +74,21 @@ function TableListFlights(props: TableListFlightsProps) {
       >
         <Table aria-label="simple table" style={{ borderCollapse: "inherit" }}>
           <TableBody>
-            {data?.departureFlights?.map((flight) => (
-              <FlightItem flight={flight} onChoose={handleChooseFlight} />
-            ))}
+            {tabValue === 0 &&
+              data?.departureFlights?.map((flight) => (
+                <FlightItem
+                  flight={flight}
+                  onChoose={handleChooseDepartureFlight}
+                />
+              ))}
+            {tabValue === 1 &&
+              willReturn &&
+              data?.returnFlights?.map((flight) => (
+                <FlightItem
+                  flight={flight}
+                  onChoose={handleChooseReturnFlight}
+                />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
