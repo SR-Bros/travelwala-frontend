@@ -6,6 +6,8 @@ import {
   hourMinuteDiff,
 } from "../../../../../utils/DateTimeUtils";
 import DefaultImage from "../../../../../components/SVG/DefaultImage";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux/store";
 
 type FlightItemProps = {
   flight: FlightResponse;
@@ -14,6 +16,10 @@ type FlightItemProps = {
 
 function FlightItem(props: FlightItemProps) {
   const { flight, onChoose } = props;
+
+  const seatClass = useSelector(
+    (state: RootState) => (state.criteria as any).seatClass
+  );
 
   const CellImage = useMemo(() => {
     return (
@@ -54,7 +60,7 @@ function FlightItem(props: FlightItemProps) {
         <Typography>{flight.airline.name}</Typography>
       </TableCell>
     );
-  }, [flight.airline.name]);
+  }, [flight.departureTime, flight.expectedArrivalTime, flight.airline.name]);
 
   const CellFlightDuration = useMemo(() => {
     return (
@@ -69,10 +75,13 @@ function FlightItem(props: FlightItemProps) {
   const CellPrice = useMemo(() => {
     return (
       <TableCell align="right" style={{ width: "150px" }}>
-        {flight.adultEconomicPrice.toLocaleString()} VND
+        {seatClass === "Economy"
+          ? flight.adultEconomicPrice.toLocaleString()
+          : flight.adultBusinessPrice.toLocaleString()}{" "}
+        VND
       </TableCell>
     );
-  }, [flight.adultBusinessPrice, flight.adultEconomicPrice]);
+  }, [seatClass, flight.adultBusinessPrice, flight.adultEconomicPrice]);
 
   const CellBtnChoose = useMemo(() => {
     return (
@@ -94,7 +103,7 @@ function FlightItem(props: FlightItemProps) {
         </Button>
       </TableCell>
     );
-  }, []);
+  }, [flight, onChoose]);
 
   return (
     <TableRow>

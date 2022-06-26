@@ -11,7 +11,6 @@ import { Grid } from "@mui/material";
 import FlightCart from "./components/flight-cart/FlightCart";
 
 function ListFlight() {
-  const [criteria, setCriteria] = useState<FlightCriteria>();
   const [data, setData] = useState<SearchFlightResponse>();
 
   const location = useLocation();
@@ -73,8 +72,6 @@ function ListFlight() {
       infantCount: seatCount && seatCount[2] ? parseInt(seatCount[2]) : 0,
       seatClass: sc ? sc : "Economic",
     };
-
-    setCriteria(flightCriteria);
 
     return flightCriteria;
   };
