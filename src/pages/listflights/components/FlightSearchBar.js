@@ -68,10 +68,9 @@ const FlightSearchBar = () => {
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
-        justifyContent="center"
       >
         <WalaTextField
-          sx={{ width: 200 }}
+          sx={{ width: "20%" }}
           disabled
           iconStart={
             <FlightTakeoffIcon sx={{ color: "#2196f3", fontSize: 25 }} />
@@ -79,19 +78,19 @@ const FlightSearchBar = () => {
           value={from}
         />
         <WalaTextField
-          sx={{ width: 200 }}
+          sx={{ width: "20%" }}
           disabled
           iconStart={<FlightLandIcon sx={{ color: "#2196f3", fontSize: 25 }} />}
           value={to}
         />
         <WalaTextField
-          sx={{ width: 300 }}
+          sx={{ width: "15%" }}
           disabled
           iconStart={<DateRangeIcon sx={{ color: "#2196f3", fontSize: 25 }} />}
           value={dateValue}
         />
         <WalaTextField
-          sx={{ width: 250 }}
+          sx={{ width: "20%" }}
           disabled
           iconStart={
             <AirlineSeatReclineNormalIcon
@@ -101,15 +100,24 @@ const FlightSearchBar = () => {
           value={passengerValue}
         />
         <WalaTextField
-          sx={{ width: 200 }}
+          sx={{ width: "10%" }}
           disabled
           iconStart={
             <FlightClassIcon sx={{ color: "#2196f3", fontSize: 25 }} />
           }
           value={seatClass}
         />
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Slide in alert dialog
+        <Button
+          sx={{
+            width: "15%",
+            backgroundColor: "#508BFF",
+            color: "#FFF",
+            ":hover": { backgroundColor: "#578df7" },
+          }}
+          variant="outlined"
+          onClick={handleClickOpen}
+        >
+          Change Search
         </Button>
       </Stack>
       <Dialog

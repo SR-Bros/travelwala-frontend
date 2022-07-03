@@ -7,14 +7,17 @@ import FlightService from "../../api/flight/FlightService";
 import { useLocation } from "react-router-dom";
 import TableListFlights from "./components/tablelistflights/TableListFlights";
 import { formatDate } from "../../utils/DateTimeUtils";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import FlightCart from "./components/flight-cart/FlightCart";
+import FlightSearchBar from "./components/FlightSearchBar";
+import useNavigateSearch from "../../hooks/useNavigateSearch";
 
 function ListFlight() {
   const [data, setData] = useState<SearchFlightResponse>();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigateSearch();
 
   useEffect(() => {
     async function init() {
@@ -87,12 +90,34 @@ function ListFlight() {
   };
 
   return (
-    <Grid container spacing={3} sx={{ padding: "0px 0px 16px 24px" }}>
-      <Grid item sm={12} md={3}>
-        <FlightCart />
+    <Grid container spacing={3} sx={{ padding: "32px 24px 16px 24px" }}>
+      <Grid item sm={12}>
+        <FlightSearchBar />
       </Grid>
       <Grid item sm={12} md={9}>
         <TableListFlights data={data} />
+      </Grid>
+      <Grid item sm={12} md={3}>
+        <Grid container rowGap={3}>
+          <Grid item sm={12}>
+            <FlightCart />
+          </Grid>
+          <Grid item textAlign="end" sm={12}>
+            <Button
+              sx={{
+                color: "#FFF",
+                backgroundColor: "#508BFF",
+                height: "42px",
+                ":hover": {
+                  backgroundColor: "#578df7",
+                },
+              }}
+              onClick={() => navigate("/booking")}
+            >
+              Continue booking
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
