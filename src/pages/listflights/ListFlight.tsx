@@ -9,6 +9,7 @@ import TableListFlights from "./components/tablelistflights/TableListFlights";
 import { formatDate } from "../../utils/DateTimeUtils";
 import { Grid } from "@mui/material";
 import FlightCart from "./components/flight-cart/FlightCart";
+import FlightSearchBar from "./components/FlightSearchBar";
 
 function ListFlight() {
   const [data, setData] = useState<SearchFlightResponse>();
@@ -87,7 +88,10 @@ function ListFlight() {
   };
 
   return (
-    <Grid container spacing={3} sx={{ padding: "0px 0px 16px 24px" }}>
+    <Grid container rowGap={3} sx={{ padding: "0px 0px 16px 24px" }}>
+      <Grid item>
+        <FlightSearchBar />
+      </Grid>
       <Grid item sm={12} md={3}>
         <FlightCart />
       </Grid>

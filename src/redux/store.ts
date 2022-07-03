@@ -2,12 +2,30 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import bookingReducer from "./booking/BookingSlice";
 // @ts-ignore
 import criteriaReducer from "./reducer";
-import { persistReducer, persistStore } from "redux-persist";
+import { createTransform, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import moment from "moment";
+
+const dateTransform = createTransform(
+  null,
+  (outbound: any) => {
+    return {
+      ...outbound,
+      date: {
+        departureDate: moment(outbound.date.departureDate).toDate(),
+        returnDate: outbound.date.returnDate
+          ? moment(outbound.date.returnDate)
+          : null,
+      },
+    };
+  },
+  { whitelist: ["criteria"] }
+);
 
 const rootReducerConfig = {
   key: "travelwala-frontend",
   storage,
+  transforms: [dateTransform],
   blacklist: ["booking"],
 };
 
