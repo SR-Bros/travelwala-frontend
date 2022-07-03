@@ -88,8 +88,8 @@ function ListFlight() {
   };
 
   return (
-    <Grid container rowGap={3} sx={{ padding: "0px 0px 16px 24px" }}>
-      <Grid item>
+    <Grid container spacing={3} sx={{ padding: "32px 24px 16px 24px" }}>
+      <Grid item sm={12}>
         <FlightSearchBar />
       </Grid>
       <Grid item sm={12} md={3}>
