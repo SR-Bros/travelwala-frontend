@@ -108,11 +108,16 @@ const FlightSearchBar = () => {
           value={seatClass}
         />
         <Button
-          sx={{ width: "15%" }}
+          sx={{
+            width: "15%",
+            backgroundColor: "#508BFF",
+            color: "#FFF",
+            ":hover": { backgroundColor: "#578df7" },
+          }}
           variant="outlined"
           onClick={handleClickOpen}
         >
-          Slide in alert dialog
+          Change Search
         </Button>
       </Stack>
       <Dialog
