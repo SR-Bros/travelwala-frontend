@@ -26,7 +26,7 @@ function ListFlight() {
     }
 
     init();
-  }, []);
+  }, [queryParams]);
 
   /**
    * Extract criteria from search URL
@@ -59,7 +59,7 @@ function ListFlight() {
     const departureDate: string[] | null = dt ? dt.split(".") : null;
     const seatCount: string[] | null = ps ? ps.split(".") : null;
 
-    let flightCriteria: FlightCriteria = {
+    return {
       departureCity: airports && airports[0] ? airports[0] : "",
       arrivalCity: airports && airports[1] ? airports[1] : "",
       departureDate:
@@ -75,8 +75,6 @@ function ListFlight() {
       infantCount: seatCount && seatCount[2] ? parseInt(seatCount[2]) : 0,
       seatClass: sc ? sc : "Economic",
     };
-
-    return flightCriteria;
   };
 
   const loadFlight = (criteria: FlightCriteria) => {
