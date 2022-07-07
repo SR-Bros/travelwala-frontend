@@ -1,13 +1,21 @@
 import * as React from 'react'
-import {forwardRef, useState} from 'react'
+import {forwardRef} from 'react'
 import {MenuItem} from "@mui/material";
 import Box from "@mui/material/Box";
 import WalaTextField from "../../../components/WalaTextField";
+import { useDispatch, useSelector } from "react-redux";
+import { airportSelector } from "../../../redux/selectors";
+import { setFromAirport, setToAirport } from "../../../redux/actions";
 
 function LocationBox(props, ref) {
-  const [airport, setAirport] = useState(props.title === "From" ? 'Noi Bai' : 'Tan Son Nhat');
+  const {from, to} = useSelector(airportSelector);
+  const dispatch = useDispatch();
   const handleChange = (event) => {
-    setAirport(event.target.value);
+    if(props.title === "From"){
+      dispatch(setFromAirport(event.target.value));
+    }else {
+      dispatch(setToAirport(event.target.value));
+    }
   };
   return (<div>
       <h2 style={{marginBottom: 10}}>{props.title}</h2>
@@ -24,13 +32,13 @@ function LocationBox(props, ref) {
           id={props.title}
           select
           label="City"
-          value={airport}
+          value={props.title === "From" ? from : to }
           onChange={handleChange}
           iconStart={props.iconStart}
         >
           {airports.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.city}
+            <MenuItem key={option.label} value={option.label}>
+              {option.label}
             </MenuItem>
           ))}
         </WalaTextField>
@@ -40,11 +48,11 @@ function LocationBox(props, ref) {
 }
 
 const airports = [
-  {label: 'Noi Bai', city: 'Hanoi', value: 'Noi Bai'},
-  {label: 'Tan Son Nhat', city: 'Ho Chi Minh City', value: 'Tan Son Nhat'},
-  {label: 'Cam Ranh', city: 'Nha Trang', value: 'Cam Ranh'},
-  {label: 'Da Nang', city: 'Da Nang', value: 'Da Nang'},
-  {label: 'Phu Bai', city: 'Hue', value: 'Phu Bai'}
+  {label: 'Hanoi'},
+  {label: 'Ho Chi Minh City'},
+  {label: 'Nha Trang'},
+  {label: 'Da Nang'},
+  {label: 'Hue'}
 ]
 
 export default forwardRef(LocationBox)

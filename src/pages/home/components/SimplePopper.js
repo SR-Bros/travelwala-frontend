@@ -2,16 +2,16 @@ import * as React from 'react';
 import Popper from '@mui/material/Popper';
 import Passengers from "./Passengers";
 import Box from "@mui/material/Box";
-import {useStore} from "./store";
 import {Button, ClickAwayListener} from "@mui/material";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import WalaTextField from "../../../components/WalaTextField";
+import { useSelector } from "react-redux";
+import { passengerSelector } from "../../../redux/selectors";
 
 export default function SimplePopper() {
   const [open, setOpen] = React.useState(false);
-  const [state] = useStore();
-  const {adult, child, infant} = state;
-  const [label, setLabel] = React.useState(adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant"));
+  const {adult, child, infant} = useSelector(passengerSelector);
+  const label = adult.toString().concat(" Adult, ", child.toString(), " Child, ", infant.toString(), " Infant");
   let anchorElRef = React.useRef(null)
 
   const handleFocus = () => {
@@ -45,12 +45,9 @@ export default function SimplePopper() {
         handleClickAway()
       }
     }}>
-      <Popper id={id} open={open} anchorEl={anchorElRef.current}>
+      <Popper id={id} open={open} anchorEl={anchorElRef.current} sx={{zIndex: 'modal'}}>
         <Box sx={{border: 1, p: 1, bgcolor: 'white', marginTop: 2, width: 380}}>
-          <Passengers f={(label) => {
-            setLabel(label)
-          }}
-          />
+          <Passengers />
           <Button color='success' sx={{marginLeft: 39}} onClick={handleClickAway}>Done</Button>
         </Box>
       </Popper>
