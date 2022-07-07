@@ -32,13 +32,19 @@ const SignInComponent = ({ handleChange }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const signin = () => {
+  const signin = async () => {
     const user = {
       username: username,
       password: password,
     }
 
-    SignInService.signin(user);
+    let response = await SignInService.signin(user);
+
+    if (response && response.data) {
+      localStorage.setItem("accessToken", response.data.loginToken.access_token);
+      localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
+      localStorage.setItem("username", response.data.user.username);
+    }
   };
 
   //Component
