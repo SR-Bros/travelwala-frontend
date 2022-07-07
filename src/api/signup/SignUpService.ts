@@ -6,7 +6,7 @@ class SignInService {
   static async signup(
     usernamePasswordRegister: UsernamePasswordRegister
   ): Promise<AxiosResponse<UsernamePasswordRegisterResponse>> {
-    return axios.post(`/`, usernamePasswordRegister, {
+    return axios.post(`/register`, usernamePasswordRegister, {
       ...axiosConfig()
     });
   }

@@ -83,7 +83,6 @@ const SignUpComponent = ({ handleChange }) => {
       <TextField id="email"
                  variant="standard"
                  label="Email"
-                 type="password"
                  style={textFieldStyle}
                  onChange={(e) => {
                    setEmail(e.target.value);
