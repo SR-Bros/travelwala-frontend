@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
+import useNavigateSearch from "../hooks/useNavigateSearch";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -45,9 +46,19 @@ const Navbar = () => {
     setAccommodationAnchorEl(null);
   };
 
+  const navigate = useNavigateSearch();
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+
+    navigate("/");
+  }
+
   const btnStyle = { my: 2, color: "black", display: "block", mr: 2 };
 
-  return (<AppBar position="sticky" style={{background: "#FFFFFF", top:"0"}}>
+  return (<AppBar position="sticky" style={{ background: "#FFFFFF", top: "0" }}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
@@ -132,31 +143,49 @@ const Navbar = () => {
               My Booking
             </Button>
 
-            <Button
+            {!localStorage.getItem("accessToken") && (<Button
               href="/signin"
               sx={{
-              my: 2,
-              color: "black",
-              display: "block"
-            }}>
+                my: 2,
+                color: "black",
+                display: "block"
+              }}>
               Sign In
-            </Button>
-
-            <Button
+            </Button>)}
+            {localStorage.getItem("username") &&
+              <Typography>
+                {localStorage.getItem("username")}
+              </Typography>}
+            {!localStorage.getItem("accessToken") && <Button
               href="/signup"
               sx={[{
-              my: 2,
-              color: "white",
-              marginLeft: 2,
-              background: "black",
-              display: "block",
-              borderRadius: 40
-            },
-              {
-              "&:hover": { color: "black" }
-            }]}>
+                my: 2,
+                color: "white",
+                marginLeft: 2,
+                background: "black",
+                display: "block",
+                borderRadius: 40
+              },
+                {
+                  "&:hover": { color: "black" }
+                }]}>
               Register
-            </Button>
+            </Button>}
+            {localStorage.getItem("accessToken") && <Button
+              onclick={logout}
+              sx={[{
+                my: 2,
+                color: "white",
+                marginLeft: 2,
+                background: "black",
+                display: "block",
+                borderRadius: 40
+              },
+                {
+                  "&:hover": { color: "black" }
+                }]}>
+              Logout
+            </Button>}
           </Box>
         </Grid>
       </Grid>
