@@ -84,7 +84,7 @@ const FlightSearchBar = () => {
           value={to}
         />
         <WalaTextField
-          sx={{ width: "15%" }}
+          sx={{ width: "20%" }}
           disabled
           iconStart={<DateRangeIcon sx={{ color: "#2196f3", fontSize: 25 }} />}
           value={dateValue}
@@ -109,7 +109,7 @@ const FlightSearchBar = () => {
         />
         <Button
           sx={{
-            width: "15%",
+            width: "10%",
             backgroundColor: "#508BFF",
             color: "#FFF",
             ":hover": { backgroundColor: "#578df7" },
