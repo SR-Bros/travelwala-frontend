@@ -8,6 +8,9 @@ import { Container} from '@mui/system';
 import {useDispatch, useSelector}  from "react-redux";
 import { passengerSelector } from "../../../redux/selectors";
 import { addAdult, addChild, addInfant, removeAdult, removeChild, removeInfant } from "../../../redux/actions";
+import {
+    choosePassengerForBooking
+  } from "../../../redux/booking/BookingSlice";
 
 function Passengers() {
     const dispatch = useDispatch();
@@ -52,7 +55,10 @@ const TravelerDetailComponent = (props) => {
     const [dateOfBirth, setDateOfBirth] = React.useState("");
     const [email, setEmail] = React.useState("");
 
+    const dispatch = useDispatch();
+
     const handleOnChange = (event, setFunction) => {
+        dispatch(choosePassengerForBooking(props.passengers));
         setFunction(event.target.value);
     }
 
@@ -62,6 +68,7 @@ const TravelerDetailComponent = (props) => {
         setLastName(props.passenger.lastName);
         setDateOfBirth(props.passenger.dateOfBirth);
         setEmail(props.passenger.email);
+        console.log(props.passengers)
     }, [props.passenger]);
 
         return (       
@@ -95,6 +102,12 @@ const TravelerDetailComponent = (props) => {
                             }}
                         >
                             <h3>Passenger {props.index+1}</h3>
+                            <Button onClick={() => 
+                                props.onRemove(props.index)
+                                }
+                            >
+                                {props.passenger.type}
+                            </Button>
                             <Button onClick={() => 
                                 props.onRemove(props.index)
                                 }
@@ -169,21 +182,54 @@ const TravelerDetailComponent = (props) => {
 
 
 export default function TravelerDetail() {
-    /*
-        passengers datatype: 
-        {
-            title: "",
-            firstName: "",
-            lastName: "",
-            dateOfBirth: "",
-            email: "",
-            type: ""
-        }
-    */
-
+    const {adult, child, infant} = useSelector(passengerSelector);
     const [passengers, setPassengers] = React.useState([]);
-    
-    // TODO saving to redux passengerlist when invoke setPassengers.
+
+    React.useEffect(() => {
+        debugger
+        for(let i = 0; i < adult; i++) {
+            setPassengers(
+                [
+                    ...passengers ,
+                    {
+                        title: "",
+                        firstName: "",
+                        lastName: "",
+                        dateOfBirth: "",
+                        email: "",
+                        type: "Adult"
+                    }
+                ]);
+        }
+        for(let i = 0; i < child; i++) {
+            setPassengers(
+                [
+                    ...passengers ,
+                    {
+                        title: "",
+                        firstName: "",
+                        lastName: "",
+                        dateOfBirth: "",
+                        email: "",
+                        type: "Child"
+                    }
+                ]);
+        }
+        for(let i = 0; i < infant; i++) {
+            setPassengers(
+                [
+                    ...passengers ,
+                    {
+                        title: "",
+                        firstName: "",
+                        lastName: "",
+                        dateOfBirth: "",
+                        email: "",
+                        type: "Infant"
+                    }
+                ]);
+        }
+    }, [])
 
     return (
         <>
@@ -198,7 +244,7 @@ export default function TravelerDetail() {
                                 onRemove={(index) => {
                                     setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
                                     // Decrease the passenger type count in redux 
-                                    Passengers.handleDecrease(props.passenger.type);
+                                    Passengers.handleDecrease();
                                 }}
                                 passengers={passengers}
                             />

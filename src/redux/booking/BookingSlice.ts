@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BookingState } from "./types";
 import { FlightResponse } from "../../api/flight/FlightService.types";
+import { PassengerDetail } from "../../api/passenger/passenger.types";
 
 const initialState: BookingState = {
   departureFlight: {} as FlightResponse,
   returnFlight: {} as FlightResponse,
+  passengers: [] as PassengerDetail[]
 };
 
 const bookingSlice = createSlice({
@@ -23,9 +25,15 @@ const bookingSlice = createSlice({
     ) => {
       state.returnFlight = action.payload;
     },
+    choosePassengerForBooking: (
+      state,
+      action: PayloadAction<PassengerDetail[]>
+    ) => {
+      state.passengers = action.payload
+    }
   },
 });
 
 export default bookingSlice.reducer;
-export const { chooseDepartureFlightForBooking, chooseReturnFlightForBooking } =
+export const { chooseDepartureFlightForBooking, chooseReturnFlightForBooking, choosePassengerForBooking} =
   bookingSlice.actions;
