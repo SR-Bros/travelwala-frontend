@@ -31,6 +31,9 @@ const travelerDetail = [{
 }]
 
 const Booking = () => {
+    // TODO: GET passengerlist from redux
+
+
     return (
     <Box sx={{
         ml: 7,

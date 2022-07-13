@@ -5,6 +5,45 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
+import {useDispatch, useSelector}  from "react-redux";
+import { passengerSelector } from "../../../redux/selectors";
+import { addAdult, addChild, addInfant, removeAdult, removeChild, removeInfant } from "../../../redux/actions";
+
+function Passengers() {
+    const dispatch = useDispatch();
+    const {adult, child, infant} = useSelector(passengerSelector);
+    const handleIncrease = (type) => {
+        switch (type) {
+            case "Adult":
+            dispatch(addAdult())
+            break
+            case "Child":
+            dispatch(addChild())
+            break
+            case "Infant":
+            dispatch(addInfant())
+            break
+            default:
+            break
+        }
+    }
+  
+    const handleDecrease = (type) => {
+        switch (type) {
+            case "Adult":
+            dispatch(removeAdult())
+            break
+            case "Child":
+            dispatch(removeChild())
+            break
+            case "Infant":
+            dispatch(removeInfant())
+            break
+            default:
+            break
+        }
+    }
+}
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
@@ -130,7 +169,21 @@ const TravelerDetailComponent = (props) => {
 
 
 export default function TravelerDetail() {
+    /*
+        passengers datatype: 
+        {
+            title: "",
+            firstName: "",
+            lastName: "",
+            dateOfBirth: "",
+            email: "",
+            type: ""
+        }
+    */
+
     const [passengers, setPassengers] = React.useState([]);
+    
+    // TODO saving to redux passengerlist when invoke setPassengers.
 
     return (
         <>
@@ -142,9 +195,11 @@ export default function TravelerDetail() {
                             <TravelerDetailComponent
                                 passenger={passenger}
                                 index={index}
-                                onRemove={(index) => 
+                                onRemove={(index) => {
                                     setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
-                                }
+                                    // Decrease the passenger type count in redux 
+                                    Passengers.handleDecrease(props.passenger.type);
+                                }}
                                 passengers={passengers}
                             />
                         </>
@@ -167,7 +222,8 @@ export default function TravelerDetail() {
                                 firstName: "",
                                 lastName: "",
                                 dateOfBirth: "",
-                                email: ""
+                                email: "",
+                                type: "Adult"
                             }
                         ]); 
                     }}
