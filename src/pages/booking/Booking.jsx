@@ -6,8 +6,56 @@ import BookingProcess from "./components/BookingProcess";
 import ContactDetail from "./components/ContactDetail";
 import FlightDisplay from "./components/FlightDisplay";
 import TravelerDetail from "./components/TravelerDetail";
+import {useDispatch, useSelector}  from "react-redux";
+import { passengerSelector } from "../../redux/selectors";
 
 const Booking = () => {
+    const {adult, child, infant} = useSelector(passengerSelector);
+    const createPassengerList = () => {
+        let passengers = [];
+        for(let i = 0; i < adult; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Adult"
+                }
+            ];
+        }
+        for(let i = 0; i < child; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Child"
+                }
+            ];
+        }
+        for(let i = 0; i < infant; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Infant"
+                }
+            ];
+        }
+        return passengers;
+    }
+    
+    const passengers = [...createPassengerList()];
     return (
     <Box sx={{
         ml: 7,
@@ -35,7 +83,7 @@ const Booking = () => {
                 </div>
             </Grid>
             <Grid item xs={7.5}>
-                <TravelerDetail/>
+                <TravelerDetail passengers={passengers}/>
             </Grid>
             <Grid item xs={5} >
                 <Box sx={{          

@@ -12,42 +12,6 @@ import {
     choosePassengerForBooking
   } from "../../../redux/booking/BookingSlice";
 
-function Passengers() {
-    const dispatch = useDispatch();
-    const {adult, child, infant} = useSelector(passengerSelector);
-    const handleIncrease = (type) => {
-        switch (type) {
-            case "Adult":
-            dispatch(addAdult())
-            break
-            case "Child":
-            dispatch(addChild())
-            break
-            case "Infant":
-            dispatch(addInfant())
-            break
-            default:
-            break
-        }
-    }
-  
-    const handleDecrease = (type) => {
-        switch (type) {
-            case "Adult":
-            dispatch(removeAdult())
-            break
-            case "Child":
-            dispatch(removeChild())
-            break
-            case "Infant":
-            dispatch(removeInfant())
-            break
-            default:
-            break
-        }
-    }
-}
-
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
@@ -58,7 +22,6 @@ const TravelerDetailComponent = (props) => {
     const dispatch = useDispatch();
 
     const handleOnChange = (event, setFunction) => {
-        dispatch(choosePassengerForBooking(props.passengers));
         setFunction(event.target.value);
     }
 
@@ -68,7 +31,8 @@ const TravelerDetailComponent = (props) => {
         setLastName(props.passenger.lastName);
         setDateOfBirth(props.passenger.dateOfBirth);
         setEmail(props.passenger.email);
-        console.log(props.passengers)
+        //dispatch(choosePassengerForBooking([...props.passengers]));
+        console.log("alo")
     }, [props.passenger]);
 
         return (       
@@ -101,19 +65,7 @@ const TravelerDetailComponent = (props) => {
                                 lineHeight: 0
                             }}
                         >
-                            <h3>Passenger {props.index+1}</h3>
-                            <Button onClick={() => 
-                                props.onRemove(props.index)
-                                }
-                            >
-                                {props.passenger.type}
-                            </Button>
-                            <Button onClick={() => 
-                                props.onRemove(props.index)
-                                }
-                            >
-                                Remove Passenger
-                            </Button>
+                            <h3>Passenger {props.index+1} ({props.passenger.type})</h3>
                         </Box>
                     </div>
                     <div>
@@ -181,56 +133,13 @@ const TravelerDetailComponent = (props) => {
 
 
 
-export default function TravelerDetail() {
-    const {adult, child, infant} = useSelector(passengerSelector);
+export default function TravelerDetail(props) {
     const [passengers, setPassengers] = React.useState([]);
 
     React.useEffect(() => {
-        debugger
-        for(let i = 0; i < adult; i++) {
-            setPassengers(
-                [
-                    ...passengers ,
-                    {
-                        title: "",
-                        firstName: "",
-                        lastName: "",
-                        dateOfBirth: "",
-                        email: "",
-                        type: "Adult"
-                    }
-                ]);
-        }
-        for(let i = 0; i < child; i++) {
-            setPassengers(
-                [
-                    ...passengers ,
-                    {
-                        title: "",
-                        firstName: "",
-                        lastName: "",
-                        dateOfBirth: "",
-                        email: "",
-                        type: "Child"
-                    }
-                ]);
-        }
-        for(let i = 0; i < infant; i++) {
-            setPassengers(
-                [
-                    ...passengers ,
-                    {
-                        title: "",
-                        firstName: "",
-                        lastName: "",
-                        dateOfBirth: "",
-                        email: "",
-                        type: "Infant"
-                    }
-                ]);
-        }
-    }, [])
-
+        setPassengers([...props.passengers]);
+    }, []); 
+    
     return (
         <>
         <Grid Container>
@@ -241,42 +150,11 @@ export default function TravelerDetail() {
                             <TravelerDetailComponent
                                 passenger={passenger}
                                 index={index}
-                                onRemove={(index) => {
-                                    setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
-                                    // Decrease the passenger type count in redux 
-                                    Passengers.handleDecrease();
-                                }}
                                 passengers={passengers}
                             />
                         </>
                     )
                 }
-            </Grid>
-            <Grid item xs={12} sx={{
-                ...ThemeStyle.box, 
-                border:0,
-                mb: 5
-                }}
-            >
-                <Button 
-                    variant='outlined'
-                    onClick={() => {setPassengers(
-                        [
-                            ...passengers ,
-                            {
-                                title: "",
-                                firstName: "",
-                                lastName: "",
-                                dateOfBirth: "",
-                                email: "",
-                                type: "Adult"
-                            }
-                        ]); 
-                    }}
-                    sx={{width:'100%'}}
-                >
-                    Add Passenger
-                </Button> 
             </Grid>
         </Grid>
         </>
