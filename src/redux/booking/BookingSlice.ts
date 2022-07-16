@@ -6,7 +6,8 @@ import { PassengerDetail } from "../../api/passenger/passenger.types";
 const initialState: BookingState = {
   departureFlight: {} as FlightResponse,
   returnFlight: {} as FlightResponse,
-  passengers: [] as PassengerDetail[]
+  passengers: [] as PassengerDetail[],
+  contactDetail: {} as PassengerDetail
 };
 
 const bookingSlice = createSlice({
@@ -30,10 +31,16 @@ const bookingSlice = createSlice({
       action: PayloadAction<PassengerDetail[]>
     ) => {
       state.passengers = [...action.payload]
+    },
+    chooseContactDetailForBooking: (
+      state,
+      action: PayloadAction<PassengerDetail>
+    ) => {
+      state.contactDetail = action.payload
     }
   },
 });
 
 export default bookingSlice.reducer;
-export const { chooseDepartureFlightForBooking, chooseReturnFlightForBooking, choosePassengerForBooking} =
+export const { chooseDepartureFlightForBooking, chooseReturnFlightForBooking, choosePassengerForBooking, chooseContactDetailForBooking} =
   bookingSlice.actions;

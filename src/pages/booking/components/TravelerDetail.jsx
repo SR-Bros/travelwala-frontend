@@ -6,11 +6,10 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
 import {useDispatch, useSelector}  from "react-redux";
-import { passengerSelector } from "../../../redux/selectors";
-import { addAdult, addChild, addInfant, removeAdult, removeChild, removeInfant } from "../../../redux/actions";
 import {
     choosePassengerForBooking
   } from "../../../redux/booking/BookingSlice";
+import { StoreProvider } from '../../../store';
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
@@ -18,6 +17,12 @@ const TravelerDetailComponent = (props) => {
     const [lastName, setLastName] = React.useState("");
     const [dateOfBirth, setDateOfBirth] = React.useState("");
     const [email, setEmail] = React.useState("");
+
+
+    // const store = StoreProvider();
+
+    // console.log(store.store.reducer.criteria.passenger)
+
 
     const dispatch = useDispatch();
 

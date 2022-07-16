@@ -7,5 +7,6 @@ export type BookingState = {
 
   // TODO: create type ContactResponse in directory /api/contact
   passengers: PassengerDetail[]
+  contactDetail: PassengerDetail
   // TODO: create type PassengerResponse in directory /api/response
 };
