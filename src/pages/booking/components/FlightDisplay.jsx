@@ -24,14 +24,6 @@ const infoText = {
     border: 1
 };
 
-const testFlight = {
-    airlineName: 'Vietnamairlines',
-    flightName: 'FIG4312',
-    flightTime: '16h 45m',
-    flightStartTime: '7:00 AM',
-    flightEndTime: '4:15 PM',
-}
-
 const Flight = ({Flight}) => {
     const departureTime = new Date(Flight.departureTime);
     const expectedArrivalTime = new Date(Flight.expectedArrivalTime);
@@ -69,15 +61,13 @@ const Flight = ({Flight}) => {
                         <p>{departureTime.getHours()}:{departureTime.getMinutes()} - {expectedArrivalTime.getHours()}:{expectedArrivalTime.getMinutes()}</p>
                     </item>
                     <item>
-                        <p>{departureTime.getHours()}:{departureTime.getMinutes() == 0 ? "00" : departureTime.getMinutes()} in {Flight.departureCity}</p>
+                        <p>{departureTime.getHours()}:{departureTime.getMinutes() === 0 ? "00" : departureTime.getMinutes()} in {Flight.departureCity}</p>
                     </item>
                 </Box>
             </Grid>
         </Grid>
     );
 }
-
-const returnFlight = true;
 
 export default function FlightDisplay() {
     const departureFlight = useSelector(departureFlightSelector);
