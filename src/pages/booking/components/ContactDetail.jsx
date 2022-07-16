@@ -5,7 +5,14 @@ import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
 
 export default function ContactDetail() {
-    const passenger = {};
+    const passenger = {
+        title: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        email: "",
+        type: "Adult"
+    };
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -15,6 +22,17 @@ export default function ContactDetail() {
     const handleOnChange = (event, setFunction) => {
         setFunction(event.target.value);
     }
+
+    React.useEffect(() => {
+        setTitle(passenger.title);
+        setFirstName(passenger.firstName);
+        setLastName(passenger.lastName);
+        setDateOfBirth(passenger.dateOfBirth);
+        setEmail(passenger.email);
+        
+        const temp = structuredClone(passenger);
+        dispatch(choosePassengerForBooking(temp));
+    }, [passenger.title, passenger.firstName, passenger.lastName, passenger.dateOfBirth, passenger.email]);
 
     return (
             <Box
@@ -44,7 +62,7 @@ export default function ContactDetail() {
                             value={firstName}
                             onChange={(event) => {
                                 handleOnChange(event, setFirstName); 
-                                passenger.firstname = event.target.value;
+                                passenger.firstName = event.target.value;
                             }}
                         />
                         <TextField
