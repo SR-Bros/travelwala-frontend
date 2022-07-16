@@ -79,7 +79,7 @@ const Booking = () => {
                 <BookingProcess currentState='booking'/>
             </Grid>
             {/* Traveler Details */}
-            <Grid item xs={12} sx={{mt:-10}}>
+            <Grid item xs={12} sx={{mt:-5}}>
                 <div>
                     <h1>Traveler Details</h1>
                 </div>
