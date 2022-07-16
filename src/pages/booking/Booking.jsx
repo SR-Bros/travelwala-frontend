@@ -8,6 +8,7 @@ import FlightDisplay from "./components/FlightDisplay";
 import TravelerDetail from "./components/TravelerDetail";
 import {useDispatch, useSelector}  from "react-redux";
 import { passengerSelector } from "../../redux/selectors";
+import useNavigateSearch from "../../hooks/useNavigateSearch";
 
 const Booking = () => {
     const {adult, child, infant} = useSelector(passengerSelector);
@@ -55,6 +56,8 @@ const Booking = () => {
         return passengers;
     }
     const passengers = [...createPassengerList()];
+    const navigate = useNavigateSearch();
+
     return (
     <Box sx={{
         ml: 7,
@@ -93,7 +96,7 @@ const Booking = () => {
                     justifyContent: 'center',
                     alignContent: 'center',
                 }}>
-                    <Button variant='outlined' href='\reviewbooking'>Continue To Review</Button>
+                    <Button variant='outlined' onClick={() => navigate("/reviewbooking")}>Continue To Review</Button>
                 </Box>
             </Grid>
         </Grid>

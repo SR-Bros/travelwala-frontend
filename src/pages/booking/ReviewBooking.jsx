@@ -8,7 +8,9 @@ import DisplayInfoBlock from './components/DisplayInfoBlock';
 import PriceDetail from './components/PriceDetail';
 import { passengerListSelector } from '../../redux/selectors';
 import {useDispatch, useSelector}  from "react-redux";
-
+import {
+    choosePassengerForBooking
+  } from "../../redux/booking/BookingSlice";
 
 const tommyxiaomi = {
   name: 'Tomy xiaomy',
@@ -21,7 +23,7 @@ const Booking = () => {
 
     const travelerDetail = useSelector(passengerListSelector);
     console.log(travelerDetail);
-    
+
     return (
     <Box sx={{
         ml: 7,

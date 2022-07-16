@@ -9,8 +9,6 @@ import {useDispatch, useSelector}  from "react-redux";
 import {
     choosePassengerForBooking
   } from "../../../redux/booking/BookingSlice";
-import { StoreProvider } from '../../../store';
-import { passengerListSelector } from '../../../redux/selectors';
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
@@ -20,8 +18,6 @@ const TravelerDetailComponent = (props) => {
     const [email, setEmail] = React.useState("");
 
     const dispatch = useDispatch();
-
-    const travelerDetail = useSelector(passengerListSelector);
 
     const handleOnChange = (event, setFunction) => {
         setFunction(event.target.value);
@@ -36,7 +32,6 @@ const TravelerDetailComponent = (props) => {
         
         const temp = structuredClone(props.passengers);
         dispatch(choosePassengerForBooking(temp));
-        console.log(travelerDetail);
     }, [props.passenger.title, props.passenger.firstName, props.passenger.lastName, props.passenger.dateOfBirth, props.passenger.email]);
 
         return (       
