@@ -8,7 +8,7 @@ import DisplayInfoBlock from './components/DisplayInfoBlock';
 import PriceDetail from './components/PriceDetail';
 import { passengerListSelector, contactInfoSelector } from '../../redux/selectors';
 import {useDispatch, useSelector}  from "react-redux";
-
+import useNavigateSearch from "../../hooks/useNavigateSearch";
 
 const Booking = () => {
     // TODO: GET passengerlist from redux
@@ -17,6 +17,7 @@ const Booking = () => {
     console.log(travelerDetail);
 
     const contactDetail = useSelector(contactInfoSelector);
+    const navigate = useNavigateSearch();
 
     return (
     <Box sx={{
@@ -71,7 +72,7 @@ const Booking = () => {
                     justifyContent: 'center',
                     alignContent: 'center',
                 }}>
-                    <Button variant='outlined' href='#'>Continue To Payment</Button>
+                    <Button variant='outlined' onclick={() => navigate("/payment")}>Continue To Payment</Button>
                 </Box>
             </Grid>
         </Grid>

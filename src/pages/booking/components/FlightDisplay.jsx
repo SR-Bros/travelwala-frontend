@@ -87,6 +87,7 @@ export default function FlightDisplay() {
     console.log(returnFlight);
 
     return (
+        departureFlight ? (
         <Box sx={style}>
             <div>
                 <h3>Departure</h3>
@@ -105,6 +106,6 @@ export default function FlightDisplay() {
                 ) : (<></>)
             }
             <Divider />
-        </Box>
+        </Box>) : (<></>)
     );
 }
