@@ -83,18 +83,15 @@ export default function FlightDisplay() {
     const departureFlight = useSelector(departureFlightSelector);
     const returnFlight = useSelector(returnFlightSelector)
 
-    console.log("departure");
-    console.log(returnFlight);
-
     return (
-        departureFlight ? (
+        !(Object.keys(departureFlight).length === 0 && departureFlight.constructor === Object) ? (
         <Box sx={style}>
             <div>
                 <h3>Departure</h3>
             </div>
             <Flight Flight={departureFlight}/>
             {
-                returnFlight ? 
+                !(Object.keys(returnFlight).length === 0 && returnFlight.constructor === Object) ? 
                 (
                     <>
                     <Divider />
