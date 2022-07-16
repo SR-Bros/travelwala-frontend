@@ -10,6 +10,7 @@ import {
     choosePassengerForBooking
   } from "../../../redux/booking/BookingSlice";
 import { StoreProvider } from '../../../store';
+import { passengerListSelector } from '../../../redux/selectors';
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
@@ -18,13 +19,9 @@ const TravelerDetailComponent = (props) => {
     const [dateOfBirth, setDateOfBirth] = React.useState("");
     const [email, setEmail] = React.useState("");
 
-
-    // const store = StoreProvider();
-
-    // console.log(store.store.reducer.criteria.passenger)
-
-
     const dispatch = useDispatch();
+
+    const travelerDetail = useSelector(passengerListSelector);
 
     const handleOnChange = (event, setFunction) => {
         setFunction(event.target.value);
@@ -36,9 +33,11 @@ const TravelerDetailComponent = (props) => {
         setLastName(props.passenger.lastName);
         setDateOfBirth(props.passenger.dateOfBirth);
         setEmail(props.passenger.email);
-        //dispatch(choosePassengerForBooking([...props.passengers]));
-        console.log("alo")
-    }, [props.passenger]);
+        
+        const temp = structuredClone(props.passengers);
+        dispatch(choosePassengerForBooking(temp));
+        console.log(travelerDetail);
+    }, [props.passenger.title, props.passenger.firstName, props.passenger.lastName, props.passenger.dateOfBirth, props.passenger.email]);
 
         return (       
         <div>
@@ -155,7 +154,7 @@ export default function TravelerDetail(props) {
                             <TravelerDetailComponent
                                 passenger={passenger}
                                 index={index}
-                                passengers={passengers}
+                                passengers={[...passengers]}
                             />
                         </>
                     )

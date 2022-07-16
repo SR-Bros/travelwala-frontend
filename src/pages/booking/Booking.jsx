@@ -54,7 +54,6 @@ const Booking = () => {
         }
         return passengers;
     }
-    
     const passengers = [...createPassengerList()];
     return (
     <Box sx={{

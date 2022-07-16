@@ -6,6 +6,8 @@ import BookingProcess from "./components/BookingProcess";
 import FlightDisplay from "./components/FlightDisplay";
 import DisplayInfoBlock from './components/DisplayInfoBlock';
 import PriceDetail from './components/PriceDetail';
+import { passengerListSelector } from '../../redux/selectors';
+import {useDispatch, useSelector}  from "react-redux";
 
 
 const tommyxiaomi = {
@@ -14,26 +16,12 @@ const tommyxiaomi = {
   Email: 'tomy.xm@gmail.com'
 }
 
-const travelerDetail = [{
-  name: 'Tomy xiaomy',
-  DateOfBirth: '28 April 2021',
-  nationality: 'Vietnam',
-
-}, {
-  name: 'Arthur xiaomy',
-  DateOfBirth: '29 April 2021',
-  nationality: 'Vietnam'
-}, {
-  name: 'John xiaomy',
-  DateOfBirth: '30 April 2021',
-  nationality: 'Vietnam',
-  test: 'cool'
-}]
-
 const Booking = () => {
     // TODO: GET passengerlist from redux
 
-
+    const travelerDetail = useSelector(passengerListSelector);
+    console.log(travelerDetail);
+    
     return (
     <Box sx={{
         ml: 7,
@@ -64,7 +52,7 @@ const Booking = () => {
                 {
                   travelerDetail.map((e) => 
                     <>
-                    <DisplayInfoBlock attributes={["DateOfBirth", "nationality"]} info={e} />
+                    <DisplayInfoBlock attributes={["title", "lastName", "dateOfBirth", "email", "type"]} info={e} />
                     </>
                     )
                 }

@@ -3,6 +3,10 @@ import * as ThemeStyle from './css/style'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import { departureSelector } from '../../../redux/selectors';
+import {useDispatch, useSelector}  from "react-redux";
+import { isConstructorDeclaration } from 'typescript';
+
 
 const style = {
     border:1,
@@ -28,6 +32,7 @@ const testFlight = {
 }
 
 const Flight = ({Flight}) => {
+    
     return (
         <Grid container spacing={2} sx={{}}>
             <Grid item xs={6}>
@@ -70,6 +75,11 @@ const Flight = ({Flight}) => {
 const returnFlight = true;
 
 export default function FlightDisplay() {
+    const departureFlight = useSelector(departureSelector);
+
+    console.log("departure");
+    console.log(departureFlight);
+    
     return (
         <Box sx={style}>
             <div>

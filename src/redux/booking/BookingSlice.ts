@@ -30,7 +30,7 @@ const bookingSlice = createSlice({
       state,
       action: PayloadAction<PassengerDetail[]>
     ) => {
-      state.passengers = [...action.payload]
+      state.passengers = action.payload
     },
     chooseContactDetailForBooking: (
       state,
