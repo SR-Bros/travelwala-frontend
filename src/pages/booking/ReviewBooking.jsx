@@ -6,23 +6,17 @@ import BookingProcess from "./components/BookingProcess";
 import FlightDisplay from "./components/FlightDisplay";
 import DisplayInfoBlock from './components/DisplayInfoBlock';
 import PriceDetail from './components/PriceDetail';
-import { passengerListSelector } from '../../redux/selectors';
+import { passengerListSelector, contactInfoSelector } from '../../redux/selectors';
 import {useDispatch, useSelector}  from "react-redux";
-import {
-    choosePassengerForBooking
-  } from "../../redux/booking/BookingSlice";
 
-const tommyxiaomi = {
-  name: 'Tomy xiaomy',
-  "Mobile number": '0909023421',
-  Email: 'tomy.xm@gmail.com'
-}
 
 const Booking = () => {
     // TODO: GET passengerlist from redux
 
     const travelerDetail = useSelector(passengerListSelector);
     console.log(travelerDetail);
+
+    const contactDetail = useSelector(contactInfoSelector);
 
     return (
     <Box sx={{
@@ -35,8 +29,8 @@ const Booking = () => {
                     <h1>Contact Details</h1>
                 </div>
             </Grid>
-            <Grid item xs={7.5}>
-                <DisplayInfoBlock attributes={["Mobile number", "Email"]} info={tommyxiaomi}/>
+            <Grid item xs={7.5} sx={{mb: 5}}>
+                <DisplayInfoBlock attributes={["firstName", "lastName", "phoneNumber", "email"]} info={contactDetail}/>
             </Grid>
             <Grid item xs={2.5}>
                 <FlightDisplay/>

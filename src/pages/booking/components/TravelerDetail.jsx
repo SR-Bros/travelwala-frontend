@@ -6,9 +6,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
 import {useDispatch, useSelector}  from "react-redux";
-import {
-    choosePassengerForBooking
-  } from "../../../redux/booking/BookingSlice";
+import { choosePassengerForBooking } from "../../../redux/booking/BookingSlice";
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");

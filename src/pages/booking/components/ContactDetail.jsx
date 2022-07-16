@@ -3,16 +3,19 @@ import * as ThemeStyle from './css/style'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
+import { useDispatch } from 'react-redux';
+import { chooseContactDetailForBooking } from "../../../redux/booking/BookingSlice";
+
+var passenger = {
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: ""
+};
 
 export default function ContactDetail() {
-    const passenger = {
-        title: "",
-        firstName: "",
-        lastName: "",
-        dateOfBirth: "",
-        email: "",
-        type: "Adult"
-    };
+
+    const dispatch = useDispatch();
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -24,15 +27,10 @@ export default function ContactDetail() {
     }
 
     React.useEffect(() => {
-        setTitle(passenger.title);
-        setFirstName(passenger.firstName);
-        setLastName(passenger.lastName);
-        setDateOfBirth(passenger.dateOfBirth);
-        setEmail(passenger.email);
-        
         const temp = structuredClone(passenger);
-        dispatch(choosePassengerForBooking(temp));
-    }, [passenger.title, passenger.firstName, passenger.lastName, passenger.dateOfBirth, passenger.email]);
+        dispatch(chooseContactDetailForBooking(temp));
+        console.log(temp);
+    }, [passenger.firstName, passenger.lastName, passenger.phoneNumber, passenger.email]);
 
     return (
             <Box

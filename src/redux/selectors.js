@@ -4,4 +4,5 @@ export const dateSelector = (state) => state.criteria.date;
 export const seatClassSelector = (state) => state.criteria.seatClass;
 export const roundTripSelector = (state) => state.criteria.roundTrip;
 export const passengerListSelector = (state) => state.booking.passengers
+export const contactInfoSelector = (state) => state.booking.contactDetail
 export const departureSelector = (state) => state.booking.departureFlight
