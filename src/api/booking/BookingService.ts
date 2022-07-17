@@ -7,7 +7,7 @@ class BookingService {
     bookingRequest: BookingRequest
   ): Promise<AxiosResponse<CreateBookingResponse>> {
     return axios.post(
-      `/payments/stripe/create-payment-intent`,
+      `/booking`,
       bookingRequest,
       { ...axiosConfig() }
     );
