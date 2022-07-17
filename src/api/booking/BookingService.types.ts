@@ -45,8 +45,35 @@ interface BookingContact {
 }
 
 export interface CreateBookingResponse {
-    amount: number;
-    currency: string;
-    clientSecret: string;
+    bookingId: String;
+    bookingContact: BookingContactResponse
+    adultTickets: TicketForm[]
+    childTickets: TicketForm[]
+    infantTickets: TicketForm[]
+    invoiceId: String
 }
-  
+interface BookingContactResponse {
+    id: String
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    email: String
+}
+
+interface TicketForm {
+    id: String
+    type: String
+    passenger: PassengerResponse
+    seatClass: String
+    amount: Number
+    flightId: String
+}
+
+interface PassengerResponse {
+    id: String
+    title: String
+    firstName: String
+    lastName: String
+    dob: String
+    nationality: String
+}
