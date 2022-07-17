@@ -9,12 +9,12 @@ interface CreateBookingFlightSpecs {
 }
 
 interface FlightProductSpecs {
-    departureFlightId: String
-    returnFlightId: String
-    seatClass: String
-    adultCount: Number
-    childCount: Number
-    infantCount: Number
+    departureFlightId: string
+    returnFlightId: string
+    seatClass: string
+    adultCount: number
+    childCount: number
+    infantCount: number
 }
 
 interface TravellerSpecs {
@@ -24,56 +24,56 @@ interface TravellerSpecs {
 }
 
 interface TravelerDataForm {
-    title: String
-    firstName: String
-    lastName: String
+    title: string
+    firstName: string
+    lastName: string
     dob: DateOfBirth
-    nationality: String
+    nationality: string
 }
 
 interface DateOfBirth {
-    day: Number
-    month: Number
-    year: Number
+    day: number
+    month: number
+    year: number
 }
 
 interface BookingContact {
-    firstName: String
-    lastName: String
-    phoneNumber: String
-    email: String
+    firstName: string
+    lastName: string
+    phonenumber: string
+    email: string
 }
 
 export interface CreateBookingResponse {
-    bookingId: String;
+    bookingId: string;
     bookingContact: BookingContactResponse
     adultTickets: TicketForm[]
     childTickets: TicketForm[]
     infantTickets: TicketForm[]
-    invoiceId: String
+    invoiceId: string
 }
 interface BookingContactResponse {
-    id: String
-    firstName: String
-    lastName: String
-    phoneNumber: String
-    email: String
+    id: string
+    firstName: string
+    lastName: string
+    phonenumber: string
+    email: string
 }
 
 interface TicketForm {
-    id: String
-    type: String
+    id: string
+    type: string
     passenger: PassengerResponse
-    seatClass: String
-    amount: Number
-    flightId: String
+    seatClass: string
+    amount: number
+    flightId: string
 }
 
 interface PassengerResponse {
-    id: String
-    title: String
-    firstName: String
-    lastName: String
-    dob: String
-    nationality: String
+    id: string
+    title: string
+    firstName: string
+    lastName: string
+    dob: string
+    nationality: string
 }
