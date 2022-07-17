@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Grid, Paper, Typography, TextField, Box, Button, Link } from "@mui/material";
+import { Grid, Paper, Typography, TextField, Box, Button, Link, Backdrop, CircularProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SignUpService from "../../../api/signup/SignUpService";
+import useNavigateSearch from "../../../hooks/useNavigateSearch";
 
 //Constant
 const theme = createTheme({
@@ -33,23 +34,45 @@ const SignUpComponent = ({ handleChange }) => {
   const [telephone, setTelephone] = useState(0);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigateSearch();
 
-  const signup = () => {
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      telephone: telephone,
-      username: username,
-      password: password
-    };
+  const signup = async () => {
+    try {
+      setIsLoading(!isLoading);
+      const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        telephone: telephone,
+        username: username,
+        password: password
+      };
 
-    SignUpService.signup(user);
+      let response = await SignUpService.signup(user);
+
+      if (response && response.data) {
+        setIsLoading(false);
+        navigate("/signin");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Server timeout")
+    }
+
   };
 
   //Component
   return (
     <Paper elevation={10} style={paperStyle}>
+      <div>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </div>
       <Grid align="center" style={{ marginTop: 20 }}>
         <h2 style={headerStyle}>Join us as a Travelwala member</h2>
         <Typography variant="caption" gutterBottom>Please fill this form to create an account!</Typography>
@@ -57,7 +80,7 @@ const SignUpComponent = ({ handleChange }) => {
       <TextField id="firstName"
                  variant="standard"
                  label="First Name"
-                 style={textFieldStyle, {marginRight: 30}}
+                 style={textFieldStyle, {marginRight: 58}}
                  onChange={(e) => {
                    setFirstName(e.target.value);
                  }}
