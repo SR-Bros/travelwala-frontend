@@ -72,7 +72,7 @@ const Booking = () => {
                     justifyContent: 'center',
                     alignContent: 'center',
                 }}>
-                    <Button variant='outlined' onclick={() => navigate("/payment")}>Continue To Payment</Button>
+                    <Button variant='outlined' onClick={ () => {navigate("/payment")}}>Continue To Payment</Button>
                 </Box>
             </Grid>
         </Grid>
