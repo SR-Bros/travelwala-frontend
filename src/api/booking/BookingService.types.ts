@@ -9,7 +9,8 @@ interface CreateBookingFlightSpecs {
 }
 
 interface FlightProductSpecs {
-    flightId: String
+    departureFlightId: String
+    returnFlightId: String
     seatClass: String
     adultCount: Number
     childCount: Number
