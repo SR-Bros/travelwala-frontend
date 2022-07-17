@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Paper, TextField, Button, Typography, Link, Box } from "@mui/material";
+import { Grid, Paper, TextField, Button, Typography, Link, Box, Backdrop, CircularProgress } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Axios from "axios";
+import SignInService from "../../../api/signin/SignInService";
+import useNavigateSearch from "../../../hooks/useNavigateSearch";
 
+//Constant
 const theme = createTheme({
   palette: {
     orangeFake: {
@@ -14,48 +16,76 @@ const theme = createTheme({
   }
 });
 
-const headerStyle = { margin: 0, fontFamily: "Monospace", fontSize: "24px" };
+const headerStyle = { fontFamily: "Monospace", fontSize: "24px" };
+
+const textFieldStyle = { margin: "5px 0px 0px 0px" };
 
 const paperStyle = {
   padding: 20,
-  height: 500,
+  height: 550,
   width: 420,
-  margin: "40px 25px auto",
+  margin: "40px auto",
   alignContent: "center",
   alignItems: "center"
 };
 
 const SignInComponent = ({ handleChange }) => {
-  const [phonenumber, setPhonenumber] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigateSearch();
 
-  const login = () => {
-    Axios.post("", {
-      phone_number: phonenumber,
-      password: password
-    }).then((response) => {
-      console.log(response.data);
-    });
+  const signin = async () => {
+    try {
+      setIsLoading(!isLoading);
+      const user = {
+        username: username,
+        password: password
+      };
+
+      let response = await SignInService.login(user);
+
+      if (response && response.data) {
+        setIsLoading(false);
+        localStorage.setItem("accessToken", response.data.loginToken.access_token);
+        localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
+        localStorage.setItem("username", response.data.user.username);
+        alert("Welcome ", username);
+        navigate("/");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Wrong username or password")
+    }
   };
 
+  //Component
   return (
     <Paper elevation={10} style={paperStyle}>
+      <div>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </div>
       <Grid align="center" style={{ marginTop: 50 }}>
         <h2 style={headerStyle}>Log in to your account</h2>
       </Grid>
-      <TextField id="loginUsername"
-                 label="Username"
+      <TextField id="signinUsername"
+                 label="Email"
                  variant="standard"
-                 placeholder="Enter username/phone number"
+                 style={textFieldStyle}
                  onChange={(e) => {
-                   setPhonenumber(e.target.value);
+                   setUsername(e.target.value);
                  }}
                  fullWidth required />
-      <TextField id="loginPassword"
+      <TextField id="signinPassword"
                  label="Password"
                  variant="standard"
-                 placeholder="Enter password"
                  type="password"
+                 style={textFieldStyle}
                  onChange={(e) => {
                    setPassword(e.target.value);
                  }}
@@ -76,7 +106,7 @@ const SignInComponent = ({ handleChange }) => {
           <Button type="submit"
                   color="orangeFake"
                   variant="contained"
-                  onClick={login}
+                  onClick={signin}
                   fullWidth>
             Sign in
           </Button>

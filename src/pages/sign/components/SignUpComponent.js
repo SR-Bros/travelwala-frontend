@@ -1,87 +1,134 @@
 import React, { useState } from "react";
-import { Grid, Paper, Typography, TextField, Box, Button, Link } from "@mui/material";
+import { Grid, Paper, Typography, TextField, Box, Button, Link, Backdrop, CircularProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Axios from "axios";
+import SignUpService from "../../../api/signup/SignUpService";
+import useNavigateSearch from "../../../hooks/useNavigateSearch";
 
+//Constant
 const theme = createTheme({
   palette: {
     orangeFake: {
       main: "#f7812d",
       contrastText: "#fff"
     }
-  }
+  },
 });
 
 const paperStyle = {
   padding: 20,
   width: 420,
-  height: 500,
-  margin: "40px 25px auto",
+  height: 550,
+  margin: "40px auto",
   alignContent: "center",
   alignItems: "center"
 };
 
-const headerStyle = { margin: 0, fontFamily: "Monospace", fontSize: "24px" };
+const headerStyle = { margin: "0", fontFamily: "Monospace", fontSize: "24px" };
 
-const SignUpComponent = () => {
-  const [usernameReg, setUsernameReg] = useState("");
-  const [phonenumberReg, setPhonenumberReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
-  const [emailReg, setEmailReg] = useState("");
+const textFieldStyle = { margin: "5px 0px 0px 0px" };
 
-  const register = () => {
-    Axios.post("", {
-      full_name: usernameReg,
-      phone_number: phonenumberReg,
-      password: passwordReg,
-      email: emailReg
-    }).then((response) => {
+const SignUpComponent = ({ handleChange }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState(0);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigateSearch();
 
-      console.log(response.data);
-    });
+  const signup = async () => {
+    try {
+      setIsLoading(!isLoading);
+      const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        telephone: telephone,
+        username: username,
+        password: password
+      };
+
+      let response = await SignUpService.register(user);
+
+      if (response && response.data) {
+        setIsLoading(false);
+        navigate("/signin");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Server timeout")
+    }
+
   };
 
+  //Component
   return (
     <Paper elevation={10} style={paperStyle}>
+      <div>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </div>
       <Grid align="center" style={{ marginTop: 20 }}>
         <h2 style={headerStyle}>Join us as a Travelwala member</h2>
         <Typography variant="caption" gutterBottom>Please fill this form to create an account!</Typography>
       </Grid>
-      <TextField id="username"
+      <TextField id="firstName"
+                 variant="standard"
+                 label="First Name"
+                 style={textFieldStyle, {marginRight: 58}}
+                 onChange={(e) => {
+                   setFirstName(e.target.value);
+                 }}
+                 required
+      />
+      <TextField id="lastName"
+                 variant="standard"
+                 label="Last Name"
+                 onChange={(e) => {
+                   setLastName(e.target.value);
+                 }}
+                 required
+      />
+      <TextField id="signupUsername"
                  variant="standard"
                  label="Username"
-                 placeholder="Enter your username"
+                 style={textFieldStyle}
                  onChange={(e) => {
-                   setUsernameReg(e.target.value);
-                 }}
-                 fullWidth required
-      />
-      <TextField id="phoneNumber"
-                 variant="standard"
-                 label="Phone Number"
-                 placeholder="Enter your phone number"
-                 onChange={(e) => {
-                   setPhonenumberReg(e.target.value);
-                 }}
-                 fullWidth required
-      />
-      <TextField id="password"
-                 variant="standard"
-                 label="Password"
-                 placeholder="Enter your password"
-                 type="password"
-                 onChange={(e) => {
-                   setPasswordReg(e.target.value);
+                   setUsername(e.target.value);
                  }}
                  fullWidth required
       />
       <TextField id="email"
                  variant="standard"
                  label="Email"
-                 type="password"
-                 placeholder="Enter your email"
+                 style={textFieldStyle}
                  onChange={(e) => {
-                   setEmailReg(e.target.value);
+                   setEmail(e.target.value);
+                 }}
+                 fullWidth required
+      />
+
+      <TextField id="telephone"
+                 variant="standard"
+                 label="Telephone"
+                 style={textFieldStyle}
+                 onChange={(e) => {
+                   setTelephone(e.target.value);
+                 }}
+                 fullWidth required
+      />
+      <TextField id="signupPassword"
+                 variant="standard"
+                 label="Password"
+                 type="password"
+                 style={textFieldStyle}
+                 onChange={(e) => {
+                   setPassword(e.target.value);
                  }}
                  fullWidth required
       />
@@ -91,7 +138,7 @@ const SignUpComponent = () => {
                   color="orangeFake"
                   style={{ marginTop: 20 }}
                   variant="contained"
-                  onClick={register}
+                  onClick={signup}
                   fullWidth>
             Sign up
           </Button>

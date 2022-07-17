@@ -1,10 +1,12 @@
 import * as React from "react";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
+import useNavigateSearch from "../hooks/useNavigateSearch";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Avatar from "@mui/material/Avatar";
 import Logo from "../assets/travelwala.png";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -45,9 +47,18 @@ const Navbar = () => {
     setAccommodationAnchorEl(null);
   };
 
+  const navigate = useNavigateSearch();
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+    navigate("/");
+  }
+
   const btnStyle = { my: 2, color: "black", display: "block", mr: 2 };
 
-  return (<AppBar position="sticky" style={{background: "#FFFFFF", top:"0"}}>
+  return (<AppBar position="sticky" style={{ background: "#FFFFFF", top: "0" }}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
@@ -89,6 +100,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleComboClick}>Flight + Hotel</MenuItem>
               </Menu>
             </div>
+            {/*End of Transport menu button*/}
 
             {/*Accommodation menu button*/}
             <div>
@@ -115,6 +127,7 @@ const Navbar = () => {
                 <MenuItem onClick={handleHotelsClick}>Hotels</MenuItem>
               </Menu>
             </div>
+            {/*End of Accommodation menu button*/}
 
             <Button sx={btnStyle}>
               Contact
@@ -124,35 +137,54 @@ const Navbar = () => {
               Things To Do
             </Button>
 
-            <Button sx={btnStyle}>
+            <Button
+              href="/mybooking"
+              sx={btnStyle}>
               My Booking
             </Button>
 
-            <Button
+            {!localStorage.getItem("accessToken") && (<Button
               href="/signin"
               sx={{
-              my: 2,
-              color: "black",
-              display: "block"
-            }}>
+                my: 2,
+                color: "black",
+                display: "block"
+              }}>
               Sign In
-            </Button>
-
-            <Button
+            </Button>)}
+            {localStorage.getItem("username") &&
+              <Avatar alt={localStorage.getItem("username")} src="/broken-image.jpg"
+                      style={{textAlign: "center"}} sx={{my: 2, width: 32, height: 32}}/>}
+            {!localStorage.getItem("accessToken") && <Button
               href="/signup"
               sx={[{
-              my: 2,
-              color: "white",
-              marginLeft: 2,
-              background: "black",
-              display: "block",
-              borderRadius: 40
-            },
-              {
-              "&:hover": { color: "black" }
-            }]}>
+                my: 2,
+                color: "white",
+                marginLeft: 2,
+                background: "black",
+                display: "block",
+                borderRadius: 40
+              },
+                {
+                  "&:hover": { color: "black" }
+                }]}>
               Register
-            </Button>
+            </Button>}
+            {localStorage.getItem("accessToken") && <Button
+              onClick={logout}
+              sx={[{
+                my: 2,
+                color: "white",
+                marginLeft: 2,
+                background: "black",
+                display: "block",
+                borderRadius: 40
+              },
+                {
+                  "&:hover": { color: "black" }
+                }]}>
+              Logout
+            </Button>}
           </Box>
         </Grid>
       </Grid>
