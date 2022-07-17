@@ -154,7 +154,7 @@ const Navbar = () => {
             </Button>)}
             {localStorage.getItem("username") &&
               <Avatar alt={localStorage.getItem("username")} src="/broken-image.jpg"
-                      style={{textAlign: "center"}} sx={{width: 32, height: 32}}/>}
+                      style={{textAlign: "center"}} sx={{my: 2, width: 32, height: 32}}/>}
             {!localStorage.getItem("accessToken") && <Button
               href="/signup"
               sx={[{
