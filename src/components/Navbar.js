@@ -53,7 +53,6 @@ const Navbar = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("username");
-
     navigate("/");
   }
 
@@ -155,7 +154,7 @@ const Navbar = () => {
             </Button>)}
             {localStorage.getItem("username") &&
               <Avatar alt={localStorage.getItem("username")} src="/broken-image.jpg"
-                      sx={{width: 32, height: 32}}>{localStorage.getItem("username")}</Avatar>}
+                      style={{textAlign: "center"}} sx={{width: 32, height: 32}}/>}
             {!localStorage.getItem("accessToken") && <Button
               href="/signup"
               sx={[{
@@ -172,7 +171,7 @@ const Navbar = () => {
               Register
             </Button>}
             {localStorage.getItem("accessToken") && <Button
-              onclick={logout}
+              onClick={logout}
               sx={[{
                 my: 2,
                 color: "white",
