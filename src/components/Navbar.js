@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Avatar from "@mui/material/Avatar";
 import Logo from "../assets/travelwala.png";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -153,9 +154,8 @@ const Navbar = () => {
               Sign In
             </Button>)}
             {localStorage.getItem("username") &&
-              <Typography>
-                {localStorage.getItem("username")}
-              </Typography>}
+              <Avatar alt={localStorage.getItem("username")} src="/broken-image.jpg"
+                      sx={{width: 32, height: 32}}>{localStorage.getItem("username")}</Avatar>}
             {!localStorage.getItem("accessToken") && <Button
               href="/signup"
               sx={[{
