@@ -50,6 +50,7 @@ const SignInComponent = ({ handleChange }) => {
         localStorage.setItem("accessToken", response.data.loginToken.access_token);
         localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
         localStorage.setItem("username", response.data.user.username);
+        alert("Welcome ", username);
         navigate("/");
       }
     } catch (error) {
