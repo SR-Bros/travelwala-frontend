@@ -6,8 +6,58 @@ import BookingProcess from "./components/BookingProcess";
 import ContactDetail from "./components/ContactDetail";
 import FlightDisplay from "./components/FlightDisplay";
 import TravelerDetail from "./components/TravelerDetail";
+import {useDispatch, useSelector}  from "react-redux";
+import { passengerSelector } from "../../redux/selectors";
+import useNavigateSearch from "../../hooks/useNavigateSearch";
 
 const Booking = () => {
+    const {adult, child, infant} = useSelector(passengerSelector);
+    const createPassengerList = () => {
+        let passengers = [];
+        for(let i = 0; i < adult; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Adult"
+                }
+            ];
+        }
+        for(let i = 0; i < child; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Child"
+                }
+            ];
+        }
+        for(let i = 0; i < infant; i++) {
+            passengers = [
+                ...passengers ,
+                {
+                    title: "",
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    email: "",
+                    type: "Infant"
+                }
+            ];
+        }
+        return passengers;
+    }
+    const passengers = [...createPassengerList()];
+    const navigate = useNavigateSearch();
+
     return (
     <Box sx={{
         ml: 7,
@@ -29,13 +79,13 @@ const Booking = () => {
                 <BookingProcess currentState='booking'/>
             </Grid>
             {/* Traveler Details */}
-            <Grid item xs={12} sx={{mt:-10}}>
+            <Grid item xs={12} sx={{mt:-5}}>
                 <div>
                     <h1>Traveler Details</h1>
                 </div>
             </Grid>
             <Grid item xs={7.5}>
-                <TravelerDetail/>
+                <TravelerDetail passengers={passengers}/>
             </Grid>
             <Grid item xs={5} >
                 <Box sx={{          
@@ -46,7 +96,7 @@ const Booking = () => {
                     justifyContent: 'center',
                     alignContent: 'center',
                 }}>
-                    <Button variant='outlined' href='\reviewbooking'>Continue To Review</Button>
+                    <Button variant='outlined' onClick={() => navigate("/reviewbooking")}>Continue To Review</Button>
                 </Box>
             </Grid>
         </Grid>

@@ -6,31 +6,19 @@ import BookingProcess from "./components/BookingProcess";
 import FlightDisplay from "./components/FlightDisplay";
 import DisplayInfoBlock from './components/DisplayInfoBlock';
 import PriceDetail from './components/PriceDetail';
-
-
-const tommyxiaomi = {
-  name: 'Tomy xiaomy',
-  "Mobile number": '0909023421',
-  Email: 'tomy.xm@gmail.com'
-}
-
-const travelerDetail = [{
-  name: 'Tomy xiaomy',
-  DateOfBirth: '28 April 2021',
-  nationality: 'Vietnam',
-
-}, {
-  name: 'Arthur xiaomy',
-  DateOfBirth: '29 April 2021',
-  nationality: 'Vietnam'
-}, {
-  name: 'John xiaomy',
-  DateOfBirth: '30 April 2021',
-  nationality: 'Vietnam',
-  test: 'cool'
-}]
+import { passengerListSelector, contactInfoSelector } from '../../redux/selectors';
+import {useDispatch, useSelector}  from "react-redux";
+import useNavigateSearch from "../../hooks/useNavigateSearch";
 
 const Booking = () => {
+    // TODO: GET passengerlist from redux
+
+    const travelerDetail = useSelector(passengerListSelector);
+    console.log(travelerDetail);
+
+    const contactDetail = useSelector(contactInfoSelector);
+    const navigate = useNavigateSearch();
+
     return (
     <Box sx={{
         ml: 7,
@@ -42,8 +30,8 @@ const Booking = () => {
                     <h1>Contact Details</h1>
                 </div>
             </Grid>
-            <Grid item xs={7.5}>
-                <DisplayInfoBlock attributes={["Mobile number", "Email"]} info={tommyxiaomi}/>
+            <Grid item xs={7.5} sx={{mb: 5}}>
+                <DisplayInfoBlock attributes={["firstName", "lastName", "phoneNumber", "email"]} info={contactDetail}/>
             </Grid>
             <Grid item xs={2.5}>
                 <FlightDisplay/>
@@ -61,7 +49,7 @@ const Booking = () => {
                 {
                   travelerDetail.map((e) => 
                     <>
-                    <DisplayInfoBlock attributes={["DateOfBirth", "nationality"]} info={e} />
+                    <DisplayInfoBlock attributes={["title", "lastName", "dateOfBirth", "email", "type"]} info={e} />
                     </>
                     )
                 }
@@ -84,7 +72,7 @@ const Booking = () => {
                     justifyContent: 'center',
                     alignContent: 'center',
                 }}>
-                    <Button variant='outlined' href='#'>Continue To Payment</Button>
+                    <Button variant='outlined' onClick={ () => {navigate("/payment")}}>Continue To Payment</Button>
                 </Box>
             </Grid>
         </Grid>

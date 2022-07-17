@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { Container} from '@mui/system';
+import {useDispatch, useSelector}  from "react-redux";
+import { choosePassengerForBooking } from "../../../redux/booking/BookingSlice";
 
 const TravelerDetailComponent = (props) => {
     const [title, setTitle] = React.useState("");
@@ -12,6 +14,8 @@ const TravelerDetailComponent = (props) => {
     const [lastName, setLastName] = React.useState("");
     const [dateOfBirth, setDateOfBirth] = React.useState("");
     const [email, setEmail] = React.useState("");
+
+    const dispatch = useDispatch();
 
     const handleOnChange = (event, setFunction) => {
         setFunction(event.target.value);
@@ -23,7 +27,10 @@ const TravelerDetailComponent = (props) => {
         setLastName(props.passenger.lastName);
         setDateOfBirth(props.passenger.dateOfBirth);
         setEmail(props.passenger.email);
-    }, [props.passenger]);
+        
+        const temp = structuredClone(props.passengers);
+        dispatch(choosePassengerForBooking(temp));
+    }, [props.passenger.title, props.passenger.firstName, props.passenger.lastName, props.passenger.dateOfBirth, props.passenger.email]);
 
         return (       
         <div>
@@ -55,13 +62,7 @@ const TravelerDetailComponent = (props) => {
                                 lineHeight: 0
                             }}
                         >
-                            <h3>Passenger {props.index+1}</h3>
-                            <Button onClick={() => 
-                                props.onRemove(props.index)
-                                }
-                            >
-                                Remove Passenger
-                            </Button>
+                            <h3>Passenger {props.index+1} ({props.passenger.type})</h3>
                         </Box>
                     </div>
                     <div>
@@ -129,9 +130,13 @@ const TravelerDetailComponent = (props) => {
 
 
 
-export default function TravelerDetail() {
+export default function TravelerDetail(props) {
     const [passengers, setPassengers] = React.useState([]);
 
+    React.useEffect(() => {
+        setPassengers([...props.passengers]);
+    }, []); 
+    
     return (
         <>
         <Grid Container>
@@ -142,39 +147,11 @@ export default function TravelerDetail() {
                             <TravelerDetailComponent
                                 passenger={passenger}
                                 index={index}
-                                onRemove={(index) => 
-                                    setPassengers([...passengers.slice(0, index), ...passengers.slice(index+1, passengers.length)])
-                                }
-                                passengers={passengers}
+                                passengers={[...passengers]}
                             />
                         </>
                     )
                 }
-            </Grid>
-            <Grid item xs={12} sx={{
-                ...ThemeStyle.box, 
-                border:0,
-                mb: 5
-                }}
-            >
-                <Button 
-                    variant='outlined'
-                    onClick={() => {setPassengers(
-                        [
-                            ...passengers ,
-                            {
-                                title: "",
-                                firstName: "",
-                                lastName: "",
-                                dateOfBirth: "",
-                                email: ""
-                            }
-                        ]); 
-                    }}
-                    sx={{width:'100%'}}
-                >
-                    Add Passenger
-                </Button> 
             </Grid>
         </Grid>
         </>
