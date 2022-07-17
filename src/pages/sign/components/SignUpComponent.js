@@ -49,7 +49,7 @@ const SignUpComponent = ({ handleChange }) => {
         password: password
       };
 
-      let response = await SignUpService.signup(user);
+      let response = await SignUpService.register(user);
 
       if (response && response.data) {
         setIsLoading(false);

@@ -43,14 +43,14 @@ const SignInComponent = ({ handleChange }) => {
         password: password
       };
 
-      let response = await SignInService.signin(user);
+      let response = await SignInService.login(user);
 
       if (response && response.data) {
         setIsLoading(false);
         localStorage.setItem("accessToken", response.data.loginToken.access_token);
         localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
         localStorage.setItem("username", response.data.user.username);
-        navigate("/home");
+        navigate("/");
       }
     } catch (error) {
       setIsLoading(false);
@@ -73,7 +73,7 @@ const SignInComponent = ({ handleChange }) => {
         <h2 style={headerStyle}>Log in to your account</h2>
       </Grid>
       <TextField id="signinUsername"
-                 label="Username"
+                 label="Email"
                  variant="standard"
                  style={textFieldStyle}
                  onChange={(e) => {

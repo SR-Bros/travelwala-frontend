@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { axiosConfig } from "../config";
 
 class SignInService {
-  static async signup(
+  static async register(
     usernamePasswordRegister: UsernamePasswordRegister
   ): Promise<AxiosResponse<UsernamePasswordRegisterResponse>> {
     return axios.post(`/register`, usernamePasswordRegister, {
