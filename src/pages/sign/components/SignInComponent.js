@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Grid, Paper, TextField, Button, Typography, Link, Box } from "@mui/material";
+import { Grid, Paper, TextField, Button, Typography, Link, Box, Backdrop, CircularProgress } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import SignInService from "../../../api/signin/SignInService"
+import SignInService from "../../../api/signin/SignInService";
+import useNavigateSearch from "../../../hooks/useNavigateSearch";
 
 //Constant
 const theme = createTheme({
@@ -31,25 +32,43 @@ const paperStyle = {
 const SignInComponent = ({ handleChange }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigateSearch();
 
   const signin = async () => {
-    const user = {
-      username: username,
-      password: password,
-    }
+    try {
+      setIsLoading(!isLoading);
+      const user = {
+        username: username,
+        password: password
+      };
 
-    let response = await SignInService.signin(user);
+      let response = await SignInService.signin(user);
 
-    if (response && response.data) {
-      localStorage.setItem("accessToken", response.data.loginToken.access_token);
-      localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
-      localStorage.setItem("username", response.data.user.username);
+      if (response && response.data) {
+        setIsLoading(false);
+        localStorage.setItem("accessToken", response.data.loginToken.access_token);
+        localStorage.setItem("refreshToken", response.data.loginToken.refresh_token);
+        localStorage.setItem("username", response.data.user.username);
+        navigate("/home");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Wrong username or password")
     }
   };
 
   //Component
   return (
     <Paper elevation={10} style={paperStyle}>
+      <div>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </div>
       <Grid align="center" style={{ marginTop: 50 }}>
         <h2 style={headerStyle}>Log in to your account</h2>
       </Grid>
