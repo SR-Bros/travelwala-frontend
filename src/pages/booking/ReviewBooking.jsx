@@ -14,7 +14,6 @@ const Booking = () => {
     // TODO: GET passengerlist from redux
 
     const travelerDetail = useSelector(passengerListSelector);
-    console.log(travelerDetail);
 
     const contactDetail = useSelector(contactInfoSelector);
     const navigate = useNavigateSearch();

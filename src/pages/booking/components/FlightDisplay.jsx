@@ -29,7 +29,6 @@ const Flight = ({Flight}) => {
     const expectedArrivalTime = new Date(Flight.expectedArrivalTime);
     // const flightTime = (expectedArrivalTime.getTime() - departureTime.getTime()) / (1000 * 3600); 
     const flightTime = hourMinuteDiff(departureTime, expectedArrivalTime);
-    console.log(flightTime);
     return (
         <Grid container spacing={2} sx={{}}>
             <Grid item xs={6}>

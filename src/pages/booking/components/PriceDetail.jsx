@@ -3,6 +3,14 @@ import * as ThemeStyle from './css/style'
 import Box from '@mui/material/Box';
 import { Container } from '@mui/system';
 import { Divider, Grid, Typography } from '@mui/material';
+import {
+    CreateBookingResponse,
+    BookingRequest,
+  } from "../../../api/booking/BookingService.types";
+import BookingService from "../../../api/booking/BookingService";
+import { passengerSelector } from "../../../redux/selectors";
+import { passengerListSelector, departureFlightSelector, returnFlightSelector, contactInfoSelector } from "../../../redux/selectors";
+import {useDispatch, useSelector}  from "react-redux";
 
 const testPrice = {
     total: 624,
@@ -21,8 +29,14 @@ const testPrice = {
 
 }
 
-export default function PriceDetail(props) {
-    const priceDetail = testPrice;
+export default function PriceDetail() {
+    const [priceDetail, setPriceDetail] = React.useState({total: 0, details: []});
+
+    const passengerList = useSelector(passengerListSelector);
+    const departureFlight = useSelector(departureFlightSelector);
+    const returnFlight = useSelector(returnFlightSelector);
+    const contactDetail = useSelector(contactInfoSelector);
+    const {adult, child, infant} = useSelector(passengerSelector);
     /*
     const priceDetail = [...props.priceDetail];
     */
@@ -31,6 +45,116 @@ export default function PriceDetail(props) {
         pb: 1,
         fontSize: '20px'
     }
+
+    const loadInvoice = (bookingData) => {
+        BookingService.requestBookingInvoice(bookingData)
+            .then((response) => {
+                if (response && response.data) {
+                    return response.data
+                }
+            }).then((data) => createInvoice(data))
+            .catch((reason) => console.log(reason));
+    };
+
+    const createInvoice = (data) => {
+        var total = 0;
+        var details = [];
+        console.log("data");
+        console.log(data);
+        if(data.adultTickets.length > 0 ) {
+            for(let i in data.adultTickets) {
+                if(details.filter((e) => e.type === "Adult").find((e) => (e.name === data.adultTickets[i].flightId && e.type === "Adult")) === undefined) {
+                    const amount = data.adultTickets.filter((e) => e.flightId === data.adultTickets[i].flightId).length;
+                    details.push({
+                        name: data.adultTickets[i].flightId,
+                        amount: amount,
+                        type: "Adult",
+                        price: Math.round(data.adultTickets[i].amount)
+                    });
+                    total += amount * Math.round(data.adultTickets[i].amount);
+                }
+            }
+        }
+        if(data.childTickets.length > 0 ) {
+            for(let i in data.childTickets) {
+                if(details.filter((e) => e.type === "Child").find((e) => e.name === data.childTickets[i].flightId)  === undefined) {
+                    const amount = data.childTickets.filter((e) => e.flightId === data.childTickets[i].flightId).length;
+                    details.push({
+                        name: data.childTickets[i].flightId,
+                        amount: amount,
+                        type: "Child",
+                        price: Math.round(data.childTickets[i].amount)
+                    });
+                    total += amount * Math.round(data.childTickets[i].amount);
+                }
+            }
+            console.log("processing");
+            console.log(details);
+        }
+        if(data.infantTickets.length > 0 ) {
+            for(let i in data.infantTickets) {
+                if(details.filter((e) => e.type === "Infant").find((e) => (e.name === data.infantTickets[i].flightId && e.type === "Infant"))  === undefined) {
+                    const amount = data.infantTickets.filter((e) => e.flightId === data.infantTickets[i].flightId).length;
+                    details.push({
+                        name: data.infantTickets[i].flightId,
+                        amount: amount,
+                        type: "Infant",
+                        price: Math.round(data.infantTickets[i].amount)
+                    });
+                    total += amount * Math.round(data.infantTickets[i].amount);
+                }
+            }
+        }
+        setPriceDetail({total: total, details: details});
+        console.log(priceDetail);
+    };
+
+    React.useEffect(() => {
+        async function init() {
+            console.log("start point");
+            const bookingData = await initCriteria();
+            await loadInvoice(bookingData);
+        }
+        init();
+    }, []);
+
+    const initCriteria = () => {
+        // Recreate the field dob for matching format
+        const tempPassengerList = structuredClone(passengerList);
+        tempPassengerList.map((e) => {
+            e.dob = 
+            {
+                year: e.dateOfBirth.split("/")[2],
+                month: e.dateOfBirth.split("/")[1],
+                day: e.dateOfBirth.split("/")[0]
+            };
+            e.nationality = "vietnam";
+        }
+        );
+        return {
+            createBookingFlightSpecs: {
+                travellerSpecs: {
+                    adultFormData: tempPassengerList.filter( (e) => e.type == "Adult" ),
+                    childFormData: tempPassengerList.filter( (e) => e.type == "Child" ),
+                    infantFormData: tempPassengerList.filter( (e) => e.type == "Infant" )
+                },
+                flightProductSpecs: {
+                    departureFlightId: departureFlight.id,
+                    returnFlightId: returnFlight.id ? returnFlight.id : null,
+                    seatClass: departureFlight.occupiedEconomicSeats == 0 ? "bussiness" : "Economy",
+                    adultCount: adult,
+                    childCount: child,
+                    infantCount: infant
+                }
+            },
+            bookingContact: {
+                firstName: contactDetail.firstName,
+                lastName: contactDetail.lastName,
+                phoneNumber: contactDetail.phoneNumber,
+                email: contactDetail.email
+            }
+        };
+    };
 
     return (
             <Box
@@ -84,7 +208,7 @@ export default function PriceDetail(props) {
                                                 pr: 0,
                                             }}>
                                             <item>
-                                                <Typography sx={{...typoStyle}}>{e.name + (e.amount > 0 ? "x" +e.amount : "")}</Typography>
+                                                <Typography sx={{...typoStyle}}>{e.name + (e.amount > 0 ? " x" +e.amount : "")}</Typography>
                                             </item>
                                                 <Typography sx={{...typoStyle}}>${e.price}</Typography>
                                         </Box>

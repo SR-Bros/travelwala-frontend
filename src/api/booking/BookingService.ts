@@ -7,7 +7,7 @@ class BookingService {
     bookingRequest: BookingRequest
   ): Promise<AxiosResponse<CreateBookingResponse>> {
     return axios.post(
-      `/booking`,
+      `/bookings`,
       bookingRequest,
       { ...axiosConfig() }
     );
