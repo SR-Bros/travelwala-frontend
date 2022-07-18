@@ -9,6 +9,7 @@ const OAuthSuccess = () => {
   useEffect(() => {
     const accessToken = queryParams.get("accessToken");
     localStorage.setItem("accessToken");
+    navigate("/");
   }, []);
 
   return (
