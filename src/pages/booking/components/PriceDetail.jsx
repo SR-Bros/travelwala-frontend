@@ -31,7 +31,7 @@ const testPrice = {
 
 export default function PriceDetail() {
     const [data, setData] = React.useState({});
-    const [priceDetail, setPriceDetail] = React.useState({});
+    const [priceDetail, setPriceDetail] = React.useState({total: 0, details: []});
 
     const passengerList = useSelector(passengerListSelector);
     const departureFlight = useSelector(departureFlightSelector);
@@ -49,53 +49,60 @@ export default function PriceDetail() {
 
     const loadInvoice = (bookingData) => {
         BookingService.requestBookingInvoice(bookingData)
-          .then((response) => {
-            if (response && response.data) {
-                console.log("hi");
-              setData(response.data);
-              setPriceDetail(createInvoice(response.data));
-              console.log(response);
-            }
-          })
-          .catch((reason) => console.log(reason));
+            .then((response) => {
+                if (response && response.data) {
+                setData(response.data);
+                }
+            }).then(() => createInvoice(data))
+            .catch((reason) => console.log(reason));
     };
 
     const createInvoice = (data) => {
-        const total = 1000;
-        const details = [];
+        var total = 0;
+        var details = [];
+        console.log("data");
+        console.log(data);
         if(data.adultTickets.length > 0 ) {
             for(let i in data.adultTickets) {
-                if(details.find((e) => e.name == data.adultTickets[i].flightId) === undefined) {
-                    const amount = data.adultTickets.filter((e) => e.name == data.adultTickets[i].flightId).length;
+                if(details.filter((e) => e.type === "Adult").find((e) => (e.name === data.adultTickets[i].flightId && e.type === "Adult")) === undefined) {
+                    const amount = data.adultTickets.filter((e) => e.flightId === data.adultTickets[i].flightId).length;
                     details.push({
                         name: data.adultTickets[i].flightId,
                         amount: amount,
-                        price: data.adultTickets[i].amount
+                        type: "Adult",
+                        price: Math.round(data.adultTickets[i].amount)
                     });
+                    total += amount * Math.round(data.adultTickets[i].amount);
                 }
             }
         }
         if(data.childTickets.length > 0 ) {
             for(let i in data.childTickets) {
-                if(details.find((e) => e.name == data.childTickets[i].flightId) === undefined) {
-                    const amount = data.childTickets.filter((e) => e.name == data.childTickets[i].flightId).length;
+                if(details.filter((e) => e.type === "Child").find((e) => e.name === data.childTickets[i].flightId)  === undefined) {
+                    const amount = data.childTickets.filter((e) => e.flightId === data.childTickets[i].flightId).length;
                     details.push({
                         name: data.childTickets[i].flightId,
                         amount: amount,
-                        price: data.childTickets[i].amount
+                        type: "Child",
+                        price: Math.round(data.childTickets[i].amount)
                     });
+                    total += amount * Math.round(data.childTickets[i].amount);
                 }
             }
+            console.log("processing");
+            console.log(details);
         }
         if(data.infantTickets.length > 0 ) {
             for(let i in data.infantTickets) {
-                if(details.find((e) => e.name == data.infantTickets[i].flightId) === undefined) {
-                    const amount = data.infantTickets.filter((e) => e.name == data.infantTickets[i].flightId).length;
+                if(details.filter((e) => e.type === "Infant").find((e) => (e.name === data.infantTickets[i].flightId && e.type === "Infant"))  === undefined) {
+                    const amount = data.infantTickets.filter((e) => e.flightId === data.infantTickets[i].flightId).length;
                     details.push({
                         name: data.infantTickets[i].flightId,
                         amount: amount,
-                        price: data.infantTickets[i].amount
+                        type: "Infant",
+                        price: Math.round(data.infantTickets[i].amount)
                     });
+                    total += amount * Math.round(data.infantTickets[i].amount);
                 }
             }
         }
@@ -105,14 +112,11 @@ export default function PriceDetail() {
 
     React.useEffect(() => {
         async function init() {
-            console.log("hi")
+            console.log("start point");
             const bookingData = await initCriteria();
-            console.log("test format");
-            console.log(bookingData);
-            loadInvoice(bookingData);
-          }
-      
-          init();
+            await loadInvoice(bookingData);
+        }
+        init();
     }, []);
 
     const initCriteria = () => {
@@ -205,7 +209,7 @@ export default function PriceDetail() {
                                                 pr: 0,
                                             }}>
                                             <item>
-                                                <Typography sx={{...typoStyle}}>{e.name + (e.amount > 0 ? "x" +e.amount : "")}</Typography>
+                                                <Typography sx={{...typoStyle}}>{e.name + (e.amount > 0 ? " x" +e.amount : "")}</Typography>
                                             </item>
                                                 <Typography sx={{...typoStyle}}>${e.price}</Typography>
                                         </Box>
