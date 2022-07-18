@@ -7,7 +7,10 @@ import {
     CreateBookingResponse,
     BookingRequest,
   } from "../../../api/booking/BookingService.types";
-  import BookingService from "../../../api/booking/BookingService";
+import BookingService from "../../../api/booking/BookingService";
+import { passengerSelector } from "../../../redux/selectors";
+import { passengerListSelector, departureFlightSelector, returnFlightSelector, contactInfoSelector } from "../../../redux/selectors";
+import {useDispatch, useSelector}  from "react-redux";
 
 const testPrice = {
     total: 624,
@@ -29,6 +32,12 @@ const testPrice = {
 export default function PriceDetail() {
     const [data, setData] = React.useState({});
     const priceDetail = testPrice;
+
+    const passengerList = useSelector(passengerListSelector);
+    const departureFlight = useSelector(departureFlightSelector);
+    const returnFlight = useSelector(returnFlightSelector);
+    const contactDetail = useSelector(contactInfoSelector);
+    const {adult, child, infant} = useSelector(passengerSelector);
     /*
     const priceDetail = [...props.priceDetail];
     */
@@ -51,39 +60,47 @@ export default function PriceDetail() {
     React.useEffect(() => {
         async function init() {
             const bookingData = await initCriteria();
+            console.log("test format");
+            console.log(bookingData);
             loadInvoice(bookingData);
           }
       
           init();
-    });
+    }, []);
 
     const initCriteria = () => {
-        const passengerList = useSelector();
-        const departureFlight = useSelector();
-        const returnFlight = useSelector();
-        const contactDetail = useSelector();
-
+        // Recreate the field dob for matching format
+        const tempPassengerList = structuredClone(passengerList);
+        tempPassengerList.map((e) => {
+            e.dob = 
+            {
+                year: e.dateOfBirth.split("/")[2],
+                month: e.dateOfBirth.split("/")[1],
+                day: e.dateOfBirth.split("/")[0]
+            }
+        }
+        );
         return {
             createBookingFlightSpecs: {
                 travellerSpecs: {
-                    adultFormData: adultData,
-                    childFormData: childData,
-                    infantFormData: infantData
+                    adultFormData: tempPassengerList.filter( (e) => e.type == "Adult" ),
+                    childFormData: tempPassengerList.filter( (e) => e.type == "Child" ),
+                    infantFormData: tempPassengerList.filter( (e) => e.type == "Infant" )
                 },
                 flightProductSpecs: {
-                    departureFlightId: departureFlightInfo,
-                    returnFlightId: returnFlightInfo,
-                    seatClass: 
-                    adultCount:
-                    childCount:
-                    infantCount:
+                    departureFlightId: departureFlight.id,
+                    returnFlightId: returnFlight.id,
+                    seatClass: departureFlight.occupiedEconomicSeats === 0 ? "economic" : "bussiness",
+                    adultCount: adult,
+                    childCount: child,
+                    infantCount: infant
                 }
             },
             bookingContact: {
-                firstName: 
-                lastName:
-                phoneNumber:
-                email:
+                firstName: contactDetail.firstName,
+                lastName: contactDetail.lastName,
+                phoneNumber: contactDetail.phoneNumber,
+                email: contactDetail.email
             }
         };
     };

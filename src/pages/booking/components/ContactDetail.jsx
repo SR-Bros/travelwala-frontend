@@ -29,7 +29,6 @@ export default function ContactDetail() {
     React.useEffect(() => {
         const temp = structuredClone(passenger);
         dispatch(chooseContactDetailForBooking(temp));
-        console.log(temp);
     }, [passenger.firstName, passenger.lastName, passenger.phoneNumber, passenger.email]);
 
     return (
