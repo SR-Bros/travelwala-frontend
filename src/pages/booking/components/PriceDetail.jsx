@@ -208,7 +208,7 @@ export default function PriceDetail() {
                                                 pr: 0,
                                             }}>
                                             <item>
-                                                <Typography sx={{...typoStyle}}>{e.name + (e.amount > 0 ? " x" +e.amount : "")}</Typography>
+                                                <Typography sx={{...typoStyle}}>{e.type + (e.amount > 0 ? " x" +e.amount : "")}</Typography>
                                             </item>
                                                 <Typography sx={{...typoStyle}}>${e.price}</Typography>
                                         </Box>
