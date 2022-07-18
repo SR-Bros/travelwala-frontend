@@ -52,6 +52,7 @@ export default function PriceDetail() {
           .then((response) => {
             if (response && response.data) {
               setData(response.data);
+              console.log(response);
             }
           })
           .catch((reason) => console.log(reason));
@@ -77,7 +78,8 @@ export default function PriceDetail() {
                 year: e.dateOfBirth.split("/")[2],
                 month: e.dateOfBirth.split("/")[1],
                 day: e.dateOfBirth.split("/")[0]
-            }
+            };
+            e.nationality = "vietnam";
         }
         );
         return {
@@ -89,8 +91,8 @@ export default function PriceDetail() {
                 },
                 flightProductSpecs: {
                     departureFlightId: departureFlight.id,
-                    returnFlightId: returnFlight.id,
-                    seatClass: departureFlight.occupiedEconomicSeats === 0 ? "economic" : "bussiness",
+                    returnFlightId: returnFlight.id ? returnFlight.id : null,
+                    seatClass: departureFlight.occupiedEconomicSeats == 0 ? "bussiness" : "Economy",
                     adultCount: adult,
                     childCount: child,
                     infantCount: infant
