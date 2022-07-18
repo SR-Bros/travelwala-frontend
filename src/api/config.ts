@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import qs from "qs";
 
-export const SERVER_URL = `https://travelwala-backend.herokuapp.com/`;
+export const SERVER_URL = `https://travelwala-backend.herokuapp.com`;
 export const API_BASE_URL = `${SERVER_URL}/api`;
 
 export const axiosConfig = (): AxiosRequestConfig => {
