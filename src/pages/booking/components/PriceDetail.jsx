@@ -31,7 +31,7 @@ const testPrice = {
 
 export default function PriceDetail() {
     const [data, setData] = React.useState({});
-    const priceDetail = testPrice;
+    const [priceDetail, setPriceDetail] = React.useState({});
 
     const passengerList = useSelector(passengerListSelector);
     const departureFlight = useSelector(departureFlightSelector);
@@ -51,15 +51,61 @@ export default function PriceDetail() {
         BookingService.requestBookingInvoice(bookingData)
           .then((response) => {
             if (response && response.data) {
+                console.log("hi");
               setData(response.data);
+              setPriceDetail(createInvoice(response.data));
               console.log(response);
             }
           })
           .catch((reason) => console.log(reason));
     };
 
+    const createInvoice = (data) => {
+        const total = 1000;
+        const details = [];
+        if(data.adultTickets.length > 0 ) {
+            for(let i in data.adultTickets) {
+                if(details.find((e) => e.name == data.adultTickets[i].flightId) === undefined) {
+                    const amount = data.adultTickets.filter((e) => e.name == data.adultTickets[i].flightId).length;
+                    details.push({
+                        name: data.adultTickets[i].flightId,
+                        amount: amount,
+                        price: data.adultTickets[i].amount
+                    });
+                }
+            }
+        }
+        if(data.childTickets.length > 0 ) {
+            for(let i in data.childTickets) {
+                if(details.find((e) => e.name == data.childTickets[i].flightId) === undefined) {
+                    const amount = data.childTickets.filter((e) => e.name == data.childTickets[i].flightId).length;
+                    details.push({
+                        name: data.childTickets[i].flightId,
+                        amount: amount,
+                        price: data.childTickets[i].amount
+                    });
+                }
+            }
+        }
+        if(data.infantTickets.length > 0 ) {
+            for(let i in data.infantTickets) {
+                if(details.find((e) => e.name == data.infantTickets[i].flightId) === undefined) {
+                    const amount = data.infantTickets.filter((e) => e.name == data.infantTickets[i].flightId).length;
+                    details.push({
+                        name: data.infantTickets[i].flightId,
+                        amount: amount,
+                        price: data.infantTickets[i].amount
+                    });
+                }
+            }
+        }
+        setPriceDetail({total: total, details: details});
+        console.log(priceDetail);
+    };
+
     React.useEffect(() => {
         async function init() {
+            console.log("hi")
             const bookingData = await initCriteria();
             console.log("test format");
             console.log(bookingData);
