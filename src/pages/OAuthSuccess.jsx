@@ -8,7 +8,11 @@ const OAuthSuccess = () => {
   const queryParams = new URLSearchParams(location.search);
   useEffect(() => {
     const accessToken = queryParams.get("accessToken");
-    localStorage.setItem("accessToken");
+    const refreshToken = queryParams.get("refreshToken");
+    const username = queryParams.get("username");
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("username", username);
     navigate("/");
   }, []);
 
