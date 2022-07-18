@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Payment from "./pages/payment/Payment";
+import {NewsLetter} from "./components/NewsLetter";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
         </Routes>
       </Router>
+      <NewsLetter/>
       <Footer />
     </div>
   );
