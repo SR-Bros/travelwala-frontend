@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Grid, Paper, TextField, Button, Typography, Link, Box, Backdrop, CircularProgress } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useLocation } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SignInService from "../../../api/signin/SignInService";
 import useNavigateSearch from "../../../hooks/useNavigateSearch";
+import axios, { AxiosResponse } from "axios";
 
 //Constant
 const theme = createTheme({
@@ -34,6 +36,22 @@ const SignInComponent = ({ handleChange }) => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigateSearch();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const googleOauth = async () => {
+    try {
+      setIsLoading(!isLoading);
+      let response = await SignInService.loginGoogle();
+
+      if (response && response.data) {
+        console.log(response);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("Wrong username or password")
+    }
+  }
 
   const signin = async () => {
     try {
@@ -121,8 +139,7 @@ const SignInComponent = ({ handleChange }) => {
         </Box>
         <Box sx={{ pt: 5 }}>
           <Typography>Or log in with:</Typography>
-          <Button style={{ marginTop: 10 }} variant="contained"
-                  fullWidth>
+          <Button href="https://travelwala-backend.herokuapp.com/oauth2/authorization/google" style={{ marginTop: 10 }} variant="contained" fullWidth>
             <div style={{ paddingRight: 5 }}>
               <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/c/c6bf231775a1d162b567c0882e1d7e3b.svg"
                    alt="google-icon"

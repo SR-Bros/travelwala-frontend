@@ -9,6 +9,11 @@ class SignInService {
     return axios.post(`/login`, usernamePassword, {
       ...axiosConfig()
     });
+  };
+
+  static async loginGoogle(
+  ): Promise<AxiosResponse<any>> {
+    return axios.get(`https://travelwala-backend.herokuapp.com/oauth2/authorization/google`)
   }
 }
 

@@ -6,6 +6,7 @@ import {
   ListFlight,
   Booking,
   ReviewBooking,
+  OAuthSuccess
 } from "./pages";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/reviewbooking" element={<ReviewBooking />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/google-oauth2/success" element={<OAuthSuccess />} />
         </Routes>
       </Router>
       <Footer />
