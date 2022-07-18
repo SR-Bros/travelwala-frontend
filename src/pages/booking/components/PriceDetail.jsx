@@ -30,7 +30,6 @@ const testPrice = {
 }
 
 export default function PriceDetail() {
-    const [data, setData] = React.useState({});
     const [priceDetail, setPriceDetail] = React.useState({total: 0, details: []});
 
     const passengerList = useSelector(passengerListSelector);
@@ -51,9 +50,9 @@ export default function PriceDetail() {
         BookingService.requestBookingInvoice(bookingData)
             .then((response) => {
                 if (response && response.data) {
-                setData(response.data);
+                    return response.data
                 }
-            }).then(() => createInvoice(data))
+            }).then((data) => createInvoice(data))
             .catch((reason) => console.log(reason));
     };
 
