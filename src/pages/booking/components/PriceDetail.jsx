@@ -3,31 +3,10 @@ import * as ThemeStyle from './css/style'
 import Box from '@mui/material/Box';
 import { Container } from '@mui/system';
 import { Divider, Grid, Typography } from '@mui/material';
-import {
-    CreateBookingResponse,
-    BookingRequest,
-  } from "../../../api/booking/BookingService.types";
 import BookingService from "../../../api/booking/BookingService";
 import { passengerSelector } from "../../../redux/selectors";
 import { passengerListSelector, departureFlightSelector, returnFlightSelector, contactInfoSelector } from "../../../redux/selectors";
-import {useDispatch, useSelector}  from "react-redux";
-
-const testPrice = {
-    total: 624,
-    details: [
-        {
-            name: "Hawaiian Airlines (Adult)",
-            amount: 1,
-            price: "503"
-        },
-        {
-            name: "Taxes and Fees",
-            amount: "",
-            price: "121"
-        },
-    ]
-
-}
+import {useSelector}  from "react-redux";
 
 export default function PriceDetail() {
     const [priceDetail, setPriceDetail] = React.useState({total: 0, details: []});
@@ -37,9 +16,6 @@ export default function PriceDetail() {
     const returnFlight = useSelector(returnFlightSelector);
     const contactDetail = useSelector(contactInfoSelector);
     const {adult, child, infant} = useSelector(passengerSelector);
-    /*
-    const priceDetail = [...props.priceDetail];
-    */
     
     const typoStyle = {
         pb: 1,
@@ -187,7 +163,7 @@ export default function PriceDetail() {
                             }}
                         >
                             <h3>Price you pay</h3>
-                            <h3>Total ${priceDetail.total}</h3>
+                            <h3>Total {priceDetail.total} VND</h3>
                         </Box>
                     </div>
                     <Divider/>
@@ -210,7 +186,7 @@ export default function PriceDetail() {
                                             <item>
                                                 <Typography sx={{...typoStyle}}>{e.type + (e.amount > 0 ? " x" +e.amount : "")}</Typography>
                                             </item>
-                                                <Typography sx={{...typoStyle}}>${e.price}</Typography>
+                                                <Typography sx={{...typoStyle}}>{e.price} VND</Typography>
                                         </Box>
                                     </Grid>
                                     </>
