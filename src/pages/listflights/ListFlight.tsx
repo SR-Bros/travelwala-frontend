@@ -26,7 +26,7 @@ function ListFlight() {
     }
 
     init();
-  }, [queryParams]);
+  }, [location.search]);
 
   /**
    * Extract criteria from search URL
