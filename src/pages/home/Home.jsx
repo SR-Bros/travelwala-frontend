@@ -1,6 +1,7 @@
 import SwitchSearch from "./components/SwitchSearch";
 import backgroundImage from "../../assets/sunset-beach.jpg";
 import { Box, Typography } from "@mui/material";
+import { NewsLetter } from "../../components/NewsLetter";
 
 function Home() {
   return (
@@ -9,7 +10,6 @@ function Home() {
         position: "static",
         display: "flex",
         flexDirection: "column",
-        marginBottom: "193px",
       }}
     >
       <img
@@ -27,6 +27,9 @@ function Home() {
         BOOK YOUR TRAVEL
       </Typography>
       <SwitchSearch id="search_box" />
+      <Box style={{ marginTop: "193px" }}>
+        <NewsLetter />
+      </Box>
     </Box>
   );
 }
