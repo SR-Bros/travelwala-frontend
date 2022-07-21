@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link, Typography } from "@mui/material";
 import useNavigateSearch from "../hooks/useNavigateSearch";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -56,15 +55,17 @@ const Navbar = () => {
     navigate("/");
   }
 
+  const navigatePage = (page) => {
+    navigate(page);
+  }
+
   const btnStyle = { my: 2, color: "black", display: "block", mr: 2 };
 
   return (<AppBar position="sticky" style={{ background: "#FFFFFF", top: "0" }}>
     <Toolbar>
       <Grid container>
         <Grid item xs={4}>
-          <Link href="/">
-            <img src={Logo} alt="Travelwala_logo" />
-          </Link>
+          <img style={{cursor: "pointer"}} src={Logo} alt="Travelwala_logo" onClick={() => {navigatePage("/")}}/>
         </Grid>
         <Grid item xs={8}>
           <Box sx={{
@@ -138,13 +139,13 @@ const Navbar = () => {
             </Button>
 
             <Button
-              href="/mybooking"
+              onClick={() => {navigatePage("/mybooking")}}
               sx={btnStyle}>
               My Booking
             </Button>
 
             {!localStorage.getItem("accessToken") && (<Button
-              href="/signin"
+              onClick={() => {navigatePage("/signin")}}
               sx={{
                 my: 2,
                 color: "black",
@@ -156,7 +157,7 @@ const Navbar = () => {
               <Avatar alt={localStorage.getItem("username")} src="/broken-image.jpg"
                       style={{textAlign: "center"}} sx={{my: 2, width: 32, height: 32}}/>}
             {!localStorage.getItem("accessToken") && <Button
-              href="/signup"
+              onClick={() => {navigatePage("/signup")}}
               sx={[{
                 my: 2,
                 color: "white",

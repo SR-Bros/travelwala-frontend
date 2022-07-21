@@ -45,6 +45,12 @@ const seatClasses = [
   },
 ];
 
+Date.prototype.addDays = function (days) {
+  const date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
 function FlightSearchBox() {
   const roundTrip = useSelector(roundTripSelector);
   const { departureDate, returnDate } = useSelector(dateSelector);
@@ -57,7 +63,7 @@ function FlightSearchBox() {
     if (e.currentTarget.checked) {
       dispatch(setRoundTrip(true));
       dispatch(
-        setReturnDate(new Date(new Date().setDate(departureDate.getDate() + 2)))
+        setReturnDate(departureDate.addDays(2))
       );
     } else {
       dispatch(setRoundTrip(false));
@@ -171,6 +177,7 @@ function FlightSearchBox() {
                     value="end"
                     control={
                       <Checkbox
+                        checked = {roundTrip}
                         onChange={(e) => {
                           handleChange(e);
                         }}
