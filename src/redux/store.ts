@@ -14,7 +14,7 @@ const dateTransform = createTransform(
       date: {
         departureDate: moment(outbound.date.departureDate).toDate(),
         returnDate: outbound.date.returnDate
-          ? moment(outbound.date.returnDate)
+          ? moment(outbound.date.returnDate).toDate()
           : null,
       },
     };
